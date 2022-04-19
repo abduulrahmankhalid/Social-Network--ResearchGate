@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Author">
+    <Key>
+      <PropertyRef Name="AuthorID" />
+    </Key>
+    <Property Name="AuthorID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="University" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Department" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Mobile" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ProfImage" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Comments" Relationship="Self.FK_Comments_Author" FromRole="Author" ToRole="Comments" />
+    <NavigationProperty Name="Tags" Relationship="Self.FK_Tags_Author" FromRole="Author" ToRole="Tags" />
+  </EntityType>
+  <EntityType Name="Comment">
+    <Key>
+      <PropertyRef Name="CommID" />
+    </Key>
+    <Property Name="CommID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AuthID" Type="Int32" />
+    <Property Name="PapID" Type="Int32" />
+    <Property Name="Commnt" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Author" Relationship="Self.FK_Comments_Author" FromRole="Comments" ToRole="Author" />
+    <NavigationProperty Name="Paper" Relationship="Self.FK_Comments_Paper" FromRole="Comments" ToRole="Paper" />
+  </EntityType>
+  <EntityType Name="Paper">
+    <Key>
+      <PropertyRef Name="PaperID" />
+    </Key>
+    <Property Name="PaperID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Date" Type="DateTime" Precision="0" />
+    <Property Name="Abstract" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Image" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Likes" Type="Int32" />
+    <Property Name="Dislikes" Type="Int32" />
+    <NavigationProperty Name="Comments" Relationship="Self.FK_Comments_Paper" FromRole="Paper" ToRole="Comments" />
+    <NavigationProperty Name="Tags" Relationship="Self.FK_Tags_Paper" FromRole="Paper" ToRole="Tags" />
+  </EntityType>
+  <EntityType Name="Tag">
+    <Key>
+      <PropertyRef Name="TagID" />
+    </Key>
+    <Property Name="TagID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AuthID" Type="Int32" />
+    <Property Name="PapID" Type="Int32" />
+    <NavigationProperty Name="Author" Relationship="Self.FK_Tags_Author" FromRole="Tags" ToRole="Author" />
+    <NavigationProperty Name="Paper" Relationship="Self.FK_Tags_Paper" FromRole="Tags" ToRole="Paper" />
+  </EntityType>
+  <Association Name="FK_Comments_Author">
+    <End Role="Author" Type="Self.Author" Multiplicity="0..1" />
+    <End Role="Comments" Type="Self.Comment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Author">
+        <PropertyRef Name="AuthorID" />
+      </Principal>
+      <Dependent Role="Comments">
+        <PropertyRef Name="AuthID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tags_Author">
+    <End Role="Author" Type="Self.Author" Multiplicity="0..1" />
+    <End Role="Tags" Type="Self.Tag" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Author">
+        <PropertyRef Name="AuthorID" />
+      </Principal>
+      <Dependent Role="Tags">
+        <PropertyRef Name="AuthID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Comments_Paper">
+    <End Role="Paper" Type="Self.Paper" Multiplicity="0..1" />
+    <End Role="Comments" Type="Self.Comment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Paper">
+        <PropertyRef Name="PaperID" />
+      </Principal>
+      <Dependent Role="Comments">
+        <PropertyRef Name="PapID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tags_Paper">
+    <End Role="Paper" Type="Self.Paper" Multiplicity="0..1" />
+    <End Role="Tags" Type="Self.Tag" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Paper">
+        <PropertyRef Name="PaperID" />
+      </Principal>
+      <Dependent Role="Tags">
+        <PropertyRef Name="PapID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Authors" EntityType="Self.Author" />
+    <EntitySet Name="Comments" EntityType="Self.Comment" />
+    <EntitySet Name="Papers" EntityType="Self.Paper" />
+    <EntitySet Name="Tags" EntityType="Self.Tag" />
+    <AssociationSet Name="FK_Comments_Author" Association="Self.FK_Comments_Author">
+      <End Role="Author" EntitySet="Authors" />
+      <End Role="Comments" EntitySet="Comments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tags_Author" Association="Self.FK_Tags_Author">
+      <End Role="Author" EntitySet="Authors" />
+      <End Role="Tags" EntitySet="Tags" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Comments_Paper" Association="Self.FK_Comments_Paper">
+      <End Role="Paper" EntitySet="Papers" />
+      <End Role="Comments" EntitySet="Comments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tags_Paper" Association="Self.FK_Tags_Paper">
+      <End Role="Paper" EntitySet="Papers" />
+      <End Role="Tags" EntitySet="Tags" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
