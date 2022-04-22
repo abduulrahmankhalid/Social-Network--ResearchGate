@@ -28,12 +28,44 @@ namespace ResearchGate.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Author author = db.Authors.Find(id);
-            if (author == null)
+            
+            Tag tag = db.Tags.Find(id);
+
+            Paper paper = db.Papers.Find(tag.PapID);
+            if (paper == null)
             {
                 return HttpNotFound();
             }
+
+            ViewBag.paperabstarct = paper.Abstract;
+            ViewBag.paperid = paper.PaperID;
+            ViewBag.papertitle = paper.Title;
+            ViewBag.paperimage= paper.Image;
+            ViewBag.paperdate = paper.Date;
+
             return View(author);
         }
+        
+        //public ActionResult MyPaper_Details(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    Tag tag = db.Tags.Find(id);
+
+        //    Paper paper = db.Papers.Find(tag.PapID);
+        //    if (paper == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+
+        //    ViewBag.abstarct = paper.Abstract; 
+        //    ViewBag.paperid = paper.PaperID;
+        //    ViewBag.papertitle = paper.Title;
+        //    return View();
+        //}
+
 
         // GET: Authors/Create
         public ActionResult Create()
