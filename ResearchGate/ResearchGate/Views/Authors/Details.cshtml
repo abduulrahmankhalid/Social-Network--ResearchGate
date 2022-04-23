@@ -39,8 +39,8 @@
     }
 
     .bg-c-lite-green {
-        background: -webkit-gradient(linear, left top, right top, from(#f29263), to(#ee5a6f));
-        background: linear-gradient(to right, #ee5a6f, #f29263)
+        background: -webkit-gradient(linear, left top, right top, from(#f9f9fa), to(#00ff90));
+        background: linear-gradient(to right, #f9f9fa, #18bc9c)
     }
 
     .user-profile {
@@ -173,20 +173,14 @@
                                         <p class="m-b-10 f-w-600">Department</p>
                                         <h6 class="text-muted f-w-400">@Html.DisplayFor(model => model.Department)</h6>
 
-                                        <div>@Html.ActionLink(" [+] Add Research", "Create", "Papers", null, new { @class = "btn btn-success btn-lg btn-block " })</div>
+                                        <div>@Html.ActionLink(" [+] Add Research", "Create", "Papers", new { id = Model.AuthorID }, new { @class = "btn btn-success btn-lg btn-block " })</div>
 
                                     </div>
 
                                 </div>
-                                <div>
-                                    <div class="padding"> <img src="@Url.Content(@ViewBag.paperimage)" class="img-rounded" alt="paper-Research" width="450" height="300"> </div>
-                                    <h4 class="padding">@ViewBag.papertitle</h4>
-                                    <h3 class="padding">@ViewBag.paperdate</h3>
-                                    @*<div>@Html.ActionLink("Show Paper", "Details", "Papers",null,new { id = @ViewBag.PaperID })</div>*@
 
-
-
-                                </div>
+                                <br />
+                                <div>@Html.ActionLink("Show Researchs", "MyPaper_Details", "Authors", new { id = Model.AuthorID}, new { @class = "btn btn-success btn-lg" })</div>
 
                                 <ul class="social-link list-unstyled m-t-40 m-b-10">
                                     <li><a href="#!" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="facebook" data-abc="true"><i class="mdi mdi-facebook feather icon-facebook facebook" aria-hidden="true"></i></a></li>

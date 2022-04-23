@@ -250,6 +250,7 @@
     <Content Include="Views\Comments\Details.cshtml" />
     <Content Include="Views\Comments\Edit.cshtml" />
     <Content Include="Views\Comments\Index.cshtml" />
+    <Content Include="Views\Authors\MyPaper_Details.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
