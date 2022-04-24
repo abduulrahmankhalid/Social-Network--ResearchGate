@@ -10,6 +10,11 @@ namespace ResearchGate.Controllers
     {
         public ActionResult Index()
         {
+
+            Session["username"] = null;
+            Session["AuthID"] = null;
+            Session["ProfImg"] = null;
+
             return View();
         }
 
