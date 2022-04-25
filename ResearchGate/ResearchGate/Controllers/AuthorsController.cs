@@ -28,12 +28,30 @@ namespace ResearchGate.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Author author = db.Authors.Find(id);
+
+           
+
+
+           
             if (author == null)
             {
                 return HttpNotFound();
             }
+
             return View(author);
         }
+
+        public ActionResult MyPaper_Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+  
+            var tag = db.Tags.Where(x => x.AuthID == id).ToList();
+            return View(tag);
+        }
+
 
         // GET: Authors/Create
         public ActionResult Create()
