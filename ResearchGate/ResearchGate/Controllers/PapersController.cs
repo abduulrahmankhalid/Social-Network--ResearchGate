@@ -7,7 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using ResearchGate.Models;
-
+using System.IO;
 namespace ResearchGate.Controllers
 {
     public class PapersController : Controller
@@ -46,14 +46,30 @@ namespace ResearchGate.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "PaperID,Title,Date,Abstract,Image,Likes,Dislikes")] Paper paper)
+        public ActionResult Create([Bind(Include = "PaperID,Title,Date,Abstract,Image,Likes,Dislikes")] Paper paper, HttpPostedFileBase PapImgFile)
         {
+            string path = "";
+            if (PapImgFile != null)
+            {
+                path = "~/Content/PaperImages/" + Path.GetFileName(PapImgFile.FileName);
+                PapImgFile.SaveAs(Server.MapPath(path));
+            }
+            else
+            {
+                path = "~/Content/PaperImages/paper_default_img.jpg";
+            }
+            paper.Image = path;
+
+
+
             if (ModelState.IsValid)
             {
                 db.Papers.Add(paper);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Create","Tags",new {id=paper.PaperID });
             }
+
+
 
             return View(paper);
         }
