@@ -28,9 +28,9 @@
       <PropertyRef Name="PaperID" />
     </Key>
     <Property Name="PaperID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Title" Type="nvarchar" MaxLength="50" />
-    <Property Name="Date" Type="date" />
-    <Property Name="Abstract" Type="nvarchar" MaxLength="200" />
+    <Property Name="Title" Type="nvarchar(max)" />
+    <Property Name="Date" Type="datetime" />
+    <Property Name="Abstract" Type="nvarchar(max)" />
     <Property Name="Image" Type="nvarchar" MaxLength="100" />
     <Property Name="Likes" Type="int" />
     <Property Name="Dislikes" Type="int" />

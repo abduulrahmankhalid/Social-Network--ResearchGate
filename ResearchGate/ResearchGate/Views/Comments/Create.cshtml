@@ -1,56 +1,32 @@
 ﻿@model ResearchGate.Models.Comment
 
+
+
 @{
     ViewBag.Title = "Create";
 }
-
-<h2>Create</h2>
-
-
-@using (Html.BeginForm()) 
+<center>
+    <h2>Create Comment</h2>
+    <hr />
+</center>
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Comment</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.AuthID, "AuthID", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("AuthID", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.AuthID, "", new { @class = "text-danger" })
+    <center>
+        <div style="background-color:#A3E4D7;width:600px;height:450px;border-radius:20px;box-shadow:1px 1px 2px #F4D03F, 0 0 25px #F4D03F, 0 0 5px #F4D03F;">
+            <br />
+            <center>
+                <div class="form-group">
+                    <textarea class="form-control" rows="14" cols="20" style="resize:none;"
+                              @Html.TextAreaFor(model => model.Commnt, new { htmlAttributes = new { @class = "form-control" } })
+                              @Html.ValidationMessageFor(model => model.Commnt, "", new { @class = "text-danger"})>
+        </textarea>
+                </div>
+            </center>
+            <div>
+                <button class="btn btn-success">Submit</button>
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.PapID, "PapID", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("PapID", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.PapID, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Commnt, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Commnt, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Commnt, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+    </center>
 }

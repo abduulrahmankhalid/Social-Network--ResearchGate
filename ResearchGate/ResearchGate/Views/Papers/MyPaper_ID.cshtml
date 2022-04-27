@@ -1,0 +1,32 @@
+﻿@model IEnumerable<ResearchGate.Models.Tag>
+@{
+    ViewBag.Title = "MyPaper_ID";
+}
+<br />
+<br />
+<center>
+    <div class="row" style="margin-left:250px;">
+        @foreach (var item in Model)
+        {
+
+            <div class="col-sm-6 col-md-4">
+                <div class="thumbnail">
+                    <center>
+                        <img src="@Url.Content(item.Author.ProfImage)" />
+                    </center>
+                    <div class="caption">
+                        <center>
+                            <h3>@Html.DisplayFor(modelItem => item.Author.FirstName) @Html.DisplayFor(modelItem => item.Author.LastName)</h3>
+                        </center>
+                        <p class="card-text">Email : @Html.DisplayFor(modelItem => item.Author.Email) </p>
+                        <p class="card-text">University : @Html.DisplayFor(modelItem => item.Author.University)</p>
+                        <p class="card-text">Departement : @Html.DisplayFor(modelItem => item.Author.Department)</p>
+                        <center>
+                            <p>@Html.ActionLink("Profile", "Details", "Authors", new { id = item.Author.AuthorID }, new { @class = "btn btn-success" })</p>
+                        </center>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</center>

@@ -1,0 +1,19 @@
+﻿@model IEnumerable<ResearchGate.Models.Paper>
+@{
+    ViewBag.Title = "PaperPage";
+    <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
+    <!DOCTYPE HTML>
+
+}
+
+    <div class="container-fluid" style="padding:20px">
+        <a href="#" class="btn btn-primary btn-lg disabled btn btn-default btn-xs" role="button">Article</a>
+        <a href="#" class="btn btn-primary btn-lg disabled btn btn-default btn-xs" role="button">Full-Text Avaliable</a>
+        <br />
+        <br />
+        <p>
+            @Html.ActionLink("Create New", "Create")
+        </p>
+
+    </div>
+
