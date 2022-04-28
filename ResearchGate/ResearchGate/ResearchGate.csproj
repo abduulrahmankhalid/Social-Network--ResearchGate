@@ -175,6 +175,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\PaperImages\paper_default_img.jpg" />
     <Content Include="Content\ProfileImages\profile_default_img.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -246,6 +247,7 @@
     <Content Include="Views\Comments\Index.cshtml" />
     <Content Include="Views\Authors\Login.cshtml" />
     <Content Include="Views\Shared\_PartialAuth.cshtml" />
+    <Content Include="Views\Comments\MyPaper_ID_Comment.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

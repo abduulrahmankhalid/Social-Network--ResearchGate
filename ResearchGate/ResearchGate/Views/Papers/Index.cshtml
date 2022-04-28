@@ -44,7 +44,7 @@
             @Html.DisplayFor(modelItem => item.Abstract)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Image)
+            <img src="@Url.Content(item.Image)" width="200" height="200" class="img-rounded" />
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Likes)

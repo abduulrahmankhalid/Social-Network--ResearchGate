@@ -83,6 +83,16 @@ namespace ResearchGate.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "AuthorID,Email,Password,ConfPass,FirstName,LastName,University,Department,Mobile,ProfImage")] Author author , HttpPostedFileBase ProfImgFile)
         {
+
+            Author search = db.Authors.Where( x=> x.Email == author.Email ).ToList().FirstOrDefault();
+
+            if ( search !=null)
+            {
+
+                ModelState.AddModelError("Email", "Email Already Used");
+
+            }
+
             if (ModelState.IsValid)
             {
                 string path = "";
@@ -135,7 +145,16 @@ namespace ResearchGate.Controllers
             [Bind(Include = "AuthorID,Email,Password,ConfPass,FirstName,LastName,University,Department,Mobile,ProfImage")] Author author , HttpPostedFileBase EditProfImgFile)
         {
 
+            var search = db.Authors.AsNoTracking().Where(x => x.Email == author.Email).ToList().FirstOrDefault();
+   
             var before = db.Authors.AsNoTracking().Where( x=> x.AuthorID == author.AuthorID).ToList().FirstOrDefault();
+
+            if (search != null && search.Email != before.Email )
+            {
+
+                ModelState.AddModelError("Email", "Email Already Used");
+
+            }
 
             string path = "";
             if (EditProfImgFile != null)

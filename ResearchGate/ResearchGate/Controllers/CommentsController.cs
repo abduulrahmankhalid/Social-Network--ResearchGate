@@ -39,8 +39,6 @@ namespace ResearchGate.Controllers
         // GET: Comments/Create
         public ActionResult Create()
         {
-            ViewBag.AuthID = new SelectList(db.Authors, "AuthorID", "Email");
-            ViewBag.PapID = new SelectList(db.Papers, "PaperID", "Title");
             return View();
         }
 
@@ -49,18 +47,40 @@ namespace ResearchGate.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CommID,AuthID,PapID,Commnt")] Comment comment)
+        public ActionResult Create(Comment comment , int? id)
         {
+            comment.PapID = id;
+            comment.AuthID = (int)Session["AuthID"];
+
             if (ModelState.IsValid)
             {
                 db.Comments.Add(comment);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details" , "Papers" , new { id = comment.PapID });
             }
 
             ViewBag.AuthID = new SelectList(db.Authors, "AuthorID", "Email", comment.AuthID);
             ViewBag.PapID = new SelectList(db.Papers, "PaperID", "Title", comment.PapID);
             return View(comment);
+        }
+
+        public ActionResult MyPaper_ID_Comment(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+
+
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+
+
+            return View(db.Comments.Where(x => x.PapID == id).ToList());
         }
 
         // GET: Comments/Edit/5

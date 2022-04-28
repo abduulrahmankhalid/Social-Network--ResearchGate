@@ -61,6 +61,12 @@
     </dl>
 </div>
 <p>
+    <a href="@Url.Action("Create" , "Comments" , new { id = Model.PaperID})" class="btn btn-warning" style="position:fixed;">
+        <span class="glyphicon glyphicon-pencil"></span>
+        Add New Comment
+    </a>
+</p>
+<p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.PaperID }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

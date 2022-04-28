@@ -1,80 +1,194 @@
 ﻿@model ResearchGate.Models.Paper
 
+<style>
+    body {
+        font-family: montserrt;
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        overflow: hidden;
+        background: linear-gradient(120deg,#7FFFD4,#008B8B)
+    }
+
+    .center {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        width: 400px;
+        background: #FFFAF0;
+        border-radius: 10px;
+    }
+
+
+
+        .center form {
+            padding: 40px;
+            box-sizing: border-box;
+        }
+
+        .center h1 {
+            text-align: center;
+            padding: 0 0 20px 0;
+            border-bottom: 1px solid silver;
+        }
+
+
+
+    form .txt_field {
+        position: relative;
+        border-bottom: 2px solid #adadad;
+        margin: 30px 0;
+    }
+
+
+
+    .txt_field input {
+        width: 100%;
+        padding: 0 5px;
+        height: 40px;
+        font-size: 16px;
+        border: none;
+        background: none;
+        outline: none;
+    }
+
+
+
+    .txt_field label {
+        position: absolute;
+        top: 50%;
+        left: 5px;
+        color: #adadad;
+        transform: translateY(-50%);
+        font-size: 16px;
+        pointer-events: none;
+        transition: .5s;
+    }
+
+
+
+    .txt_field span::before {
+        content: '';
+        position: absolute;
+        top: 40px;
+        left: 0;
+        width: 0%;
+        height: 2px;
+        background: #2691d9;
+        transition: .5s;
+    }
+
+    .txt_field input:focus ~ label,
+    .txt_field input:valid ~ label {
+        top: -5px;
+        color: #2691d9;
+    }
+
+
+
+    .txt_field input:focus ~ span::before,
+    .txt_field input:valid ~ span::before {
+        width: 100%;
+        color: #2691d9;
+    }
+
+
+
+    input[type="submit"] {
+        width: 100%;
+        height: 50px;
+        border: 1px solid;
+        background: #2691d9;
+        border-radius: 25px;
+        font-size: 18px;
+        color: #e9f4fb;
+        font-weight: 700;
+        cursor: pointer;
+        outline: none;
+        align-self: center;
+    }
+
+        input[type="submit"]:hover {
+            border-color: #2691d9;
+            transition: .5s;
+        }
+
+    .image_field input {
+        width: 100%;
+        padding: 0 5px;
+        height: 40px;
+        font-size: 16px;
+        border: none;
+        background: none;
+        outline: none;
+    }
+</style>
+
 @{
     ViewBag.Title = "Create";
 }
 
-<h2>Create</h2>
+    <body>
+        <div class="form-horizontal">
+
+            <hr />
 
 
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Paper</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+
+            <div class="center">
             </div>
+            <div class="center">
+                <h1>Create Paper</h1>
+                @using (Html.BeginForm("Create", "Papers", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+
+                    @Html.AntiForgeryToken()
+
+                    <div class="txt_field">
+                        <input id="Title" name="Title" type="text" required>
+                        <span></span>
+                        <label>
+                            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                        </label>
+                    </div>
+                    <div class="txt_field">
+                        <input id="Abstract" name="Abstract" type="text" required>
+                        <span></span>
+                        <label>
+                            @Html.LabelFor(model => model.Abstract, htmlAttributes: new { @class = "control-label col-md-2" })
+                        </label>
+                    </div>
+                    <div class="image_field">
+                        <label>
+                            @Html.LabelFor(model => model.Date, htmlAttributes: new { @class = "control-label col-md-2" })
+                        </label>
+                        <input id="Date" name="Date" type="date" required>
+                        <span></span>
+
+
+
+                    </div>
+
+
+
+                    <div class="image_field">
+                        <label>
+                            @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-2" })
+                        </label>
+                        <input type="file" id="PapImgFile" name="PapImgFile" class="form-control" />
+                        <span></span>
+                    </div>
+                    <div style="text-align:center">
+                        <input type="submit" value="Create" />
+                    </div>
+                }
+            </div>
+
+
+
+
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Date, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Abstract, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Abstract, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Abstract, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Image, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Likes, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Likes, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Likes, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Dislikes, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Dislikes, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Dislikes, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+    </body>
 }
