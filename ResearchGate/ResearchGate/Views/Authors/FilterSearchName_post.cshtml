@@ -1,0 +1,27 @@
+﻿@model IEnumerable<ResearchGate.Models.Author>
+
+@{
+    ViewBag.Title = "FilterSearchName_post";
+}
+
+<h2 style="text-align:center; margin-top: 60px; margin-bottom:100px;">"Search results"</h2>
+
+
+@foreach (var item in Model)
+{
+    <table class="row">
+        <div>
+            <div class="col-sm-6 col-md-4">
+                <div class="thumbnail">
+                    <img src="@Url.Content(item.ProfImage)" class="img-circle" alt="User-Profile-Image" width="140" height="140">
+                    <div class="caption">
+                        <h3> @Html.DisplayFor(modelItem => item.FirstName) @Html.DisplayFor(modelItem => item.LastName) </h3>
+                        <p>University: @Html.DisplayFor(modelItem => item.University), Department: @Html.DisplayFor(modelItem => item.Department)</p>
+                        <p>@Html.ActionLink("Show Details", "Details", new { id = item.AuthorID }, new { @class = "btn btn-success" })</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </table>
+}
+

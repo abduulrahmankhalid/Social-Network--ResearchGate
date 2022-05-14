@@ -26,12 +26,24 @@
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                    <li style="">
-                        <form class="form-inline my-2 my-lg-0" style=" display: flex; flex-flow: row wrap; margin-top: 5px;">
-                            <input class="form-control mr-sm-2" type="search" placeholder="Search for researches, authors..." aria-label="Search" style="width: 270px;">
-                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit" style="color: darkgreen; margin-left: 10px;"></button>
-                        </form>
+                    <li style="margin-left: 160px;display: inline; margin-top: 7px;">
+                        <div class="input-group mb-3" style=" display: flex; flex-wrap: nowrap; align-items: center; margin-left: 310px;">
+                            <div class="input-group-prepend">
+                                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-right: 5px; width:118px; text-align:center;">▼ Search</button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="~/Authors/FilterSearchEmail_get" style="padding-left: 7px;">E-mail</a>
+                                    <div role="separator" class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="~/Authors/FilterSearchName_get" style="padding-left: 7px;">Name</a>
+                                    <div role="separator" class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="~/Authors/FilterSearchUni_get" style="padding-left: 7px;">University</a>
+
+                                </div>
+                            </div>
+                        </div>
                     </li>
+
+                </ul>
+                <ul>
 
                 </ul>
             </div>
@@ -39,8 +51,9 @@
     </div>
     <div class="container body-content">
         @RenderBody()
-        <hr />
-        <footer>
+        
+        <footer style=" bottom:auto;" class="row text-center d-flex justify-content-center pt-5 mb-3 page-footer font-small indigo">
+            <hr />
             <p>&copy; @DateTime.Now.Year - Research gate Remastered</p>
         </footer>
     </div>

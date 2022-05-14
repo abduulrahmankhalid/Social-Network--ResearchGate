@@ -27,7 +27,8 @@
     }
 
     .m-r-0 {
-        margin-right: 0px
+        margin-right: 0px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     }
 
     .m-l-0 {
@@ -35,7 +36,7 @@
     }
 
     .user-card-full .user-profile {
-        border-radius: 5px 0 0 5px
+        border-radius: 5px 0 0 5px;
     }
 
     .bg-c-lite-green {
@@ -48,7 +49,8 @@
     }
 
     .card-block {
-        padding: 1.25rem
+        padding: 1.25rem;
+        margin-left: 40px;
     }
 
     .m-b-25 {
@@ -151,7 +153,7 @@
             <div class="col-xl-6 col-md-12">
                 <div class="card user-card-full">
                     <div class="row m-l-0 m-r-0" >
-                        <div class="col-sm-4 bg-c-lite-green user-profile" style="width: 400px;">
+                        <div class="col-sm-4 bg-c-lite-green user-profile" style="width: 340px;">
                             <div class="card-block text-center text-white">
                                 <div class="m-b-25"> <img src="@Url.Content(Model.ProfImage)" class="img-circle" alt="User-Profile-Image" width="140" height="140"> </div>
                                 <h3 class="f-w-600">@Html.DisplayFor(model => model.FirstName)  @Html.DisplayFor(model => model.LastName)</h3>
@@ -208,13 +210,13 @@
 
 <table class="table">
     <tr>
-        <th>
+        <td>
             <p>@ViewBag.PaperID</p>
             <p>@ViewBag.paperabstarct</p>
             <p>@ViewBag.papertitle</p>
             <p>@ViewBag.paperdate</p>
             <p>@ViewBag.paperimage</p>
-        </th>
+        </td>
         @*<th>
                 @Html.DisplayNameFor(model => model.Date)
             </th>
