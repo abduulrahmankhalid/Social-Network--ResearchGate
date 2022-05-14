@@ -67,6 +67,186 @@ namespace ResearchGate.Controllers
             return View(author);
         }
 
+
+
+
+
+        //First One============================================
+
+        [HttpGet]
+        public ActionResult FilterSearchEmail_get()
+        {
+            Author author = new Author();
+
+            if (author == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(author);
+        }
+
+        [HttpPost]
+        public ActionResult FilterSearchEmail_get([Bind(Include = "AuthorID,Email")] Author author)
+        {
+
+            if (author == null)
+            {
+                return HttpNotFound();
+            }
+
+            Author SearchEmailauthor = db.Authors.Where(x => x.Email == author.Email).ToList().FirstOrDefault();
+
+            if( SearchEmailauthor == null )
+            {
+                ModelState.AddModelError(nameof(Author.Email), "No result found!");
+                return View("NotFound");
+            }
+
+            else
+            {
+                return RedirectToAction("Details" , new { id = SearchEmailauthor.AuthorID });
+            }
+
+
+
+            return View(author);
+        }
+
+ 
+
+
+
+
+
+        //Second One============================================
+
+        [HttpGet]
+        public ActionResult FilterSearchName_get()
+        {
+            Author author = new Author();
+
+            if (author == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(author);
+        }
+
+        [HttpPost]
+        public ActionResult FilterSearchName_get([Bind(Include = "AuthorID,FirstName")] Author author)
+        {
+
+            if (author == null)
+            {
+                return HttpNotFound();
+            }
+
+            Author SearchEmailauthor = db.Authors.Where(x => x.FirstName == author.FirstName).ToList().FirstOrDefault();
+
+            if (SearchEmailauthor == null)
+            {
+                ModelState.AddModelError(nameof(Author.Email), "No result found!");
+                return View("NotFound");
+            }
+
+            else
+            {
+                return RedirectToAction("FilterSearchName_post", new { id = SearchEmailauthor.AuthorID });
+            }
+
+            return View(author);
+        }
+
+
+        public ActionResult FilterSearchName_post(int? id)
+        {
+            Author author = db.Authors.Find(id);
+
+            var SearchEmailauthor = db.Authors.Where(x => x.FirstName == author.FirstName).ToList();
+
+            if (SearchEmailauthor == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(SearchEmailauthor);
+        }
+
+
+
+
+
+        //Third One============================================
+        [HttpGet]
+        public ActionResult FilterSearchUni_get()
+        {
+            Author author = new Author();
+
+            if (author == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(author);
+        }
+
+        [HttpPost]
+        public ActionResult FilterSearchUni_get([Bind(Include = "AuthorID,University")] Author author)
+        {
+
+            if (author == null)
+            {
+                return HttpNotFound();
+            }
+
+            Author SearchEmailauthor = db.Authors.Where(x => x.University == author.University).ToList().FirstOrDefault();
+
+            if (SearchEmailauthor == null)
+            {
+                ModelState.AddModelError(nameof(Author.Email), "No result found!");
+                return View("NotFound");
+            }
+
+            else
+            {
+                return RedirectToAction("FilterSearchUni_post", new { id = SearchEmailauthor.AuthorID });
+            }
+
+            return View(author);
+        }
+
+
+        public ActionResult FilterSearchUni_post(int? id)
+        {
+            Author author = db.Authors.Find(id);
+
+            var SearchEmailauthor = db.Authors.Where(x => x.University == author.University).ToList();
+
+            if (SearchEmailauthor == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(SearchEmailauthor);
+        }
+
+
+
+
+        public ActionResult MyPaper_Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+  
+            var tag = db.Tags.Where(x => x.AuthID == id).ToList();
+            return View(tag);
+        }
+
+
         // GET: Authors/Create
         public ActionResult Create()
         {

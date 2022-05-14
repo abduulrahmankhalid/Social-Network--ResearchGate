@@ -10,25 +10,65 @@
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
+        <a class="navbar-brand" href="#">
+            <img src="~/Content/imeges/logo.png" width="40" height="40" class="d-inline-block align-top" alt="ResearchGate" style="margin-top: -10px;">
+        </a>
+        <div class="container" style="margin-left: 10px;">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
+<<<<<<< HEAD
                 @Html.ActionLink("Research Gate", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                 @Html.Partial("_PartialAuth")
+=======
+                @Html.ActionLink("Research gate", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li style="margin-left: 160px;display: inline; margin-top: 7px;">
+                        <div class="input-group mb-3" style=" display: flex; flex-wrap: nowrap; align-items: center; margin-left: 310px;">
+                            <div class="input-group-prepend">
+                                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-right: 5px; width:118px; text-align:center;">▼ Search</button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="~/Authors/FilterSearchEmail_get" style="padding-left: 7px;">E-mail</a>
+                                    <div role="separator" class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="~/Authors/FilterSearchName_get" style="padding-left: 7px;">Name</a>
+                                    <div role="separator" class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="~/Authors/FilterSearchUni_get" style="padding-left: 7px;">University</a>
+
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                </ul>
+                <ul>
+
+>>>>>>> origin/mahmooooudz
                 </ul>
             </div>
         </div>
     </div>
     <div class="container body-content">
         @RenderBody()
+<<<<<<< HEAD
         <hr />    
+=======
+        
+        <footer style=" bottom:auto;" class="row text-center d-flex justify-content-center pt-5 mb-3 page-footer font-small indigo">
+            <hr />
+            <p>&copy; @DateTime.Now.Year - Research gate Remastered</p>
+        </footer>
+>>>>>>> origin/mahmooooudz
     </div>
 
     @Scripts.Render("~/bundles/jquery")
