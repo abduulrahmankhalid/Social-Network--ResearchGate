@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityType Name="Author">
@@ -113,4 +114,121 @@
       <End Role="Tags" EntitySet="Tags" />
     </AssociationSet>
   </EntityContainer>
+=======
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Author">
+    <Key>
+      <PropertyRef Name="AuthorID" />
+    </Key>
+    <Property Name="AuthorID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="50" />
+    <Property Name="Password" Type="nvarchar" MaxLength="50" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+    <Property Name="University" Type="nvarchar" MaxLength="50" />
+    <Property Name="Department" Type="nvarchar" MaxLength="50" />
+    <Property Name="Mobile" Type="nvarchar" MaxLength="50" />
+    <Property Name="ProfImage" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="Comments">
+    <Key>
+      <PropertyRef Name="CommID" />
+    </Key>
+    <Property Name="CommID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AuthID" Type="int" />
+    <Property Name="PapID" Type="int" />
+    <Property Name="Commnt" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="Paper">
+    <Key>
+      <PropertyRef Name="PaperID" />
+    </Key>
+    <Property Name="PaperID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Title" Type="nvarchar" MaxLength="50" />
+    <Property Name="Date" Type="date" />
+    <Property Name="Abstract" Type="nvarchar" MaxLength="200" />
+    <Property Name="Image" Type="nvarchar" MaxLength="100" />
+    <Property Name="Likes" Type="int" />
+    <Property Name="Dislikes" Type="int" />
+  </EntityType>
+  <EntityType Name="Tags">
+    <Key>
+      <PropertyRef Name="TagID" />
+    </Key>
+    <Property Name="TagID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AuthID" Type="int" />
+    <Property Name="PapID" Type="int" />
+  </EntityType>
+  <Association Name="FK_Comments_Author">
+    <End Role="Author" Type="Self.Author" Multiplicity="0..1" />
+    <End Role="Comments" Type="Self.Comments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Author">
+        <PropertyRef Name="AuthorID" />
+      </Principal>
+      <Dependent Role="Comments">
+        <PropertyRef Name="AuthID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Comments_Paper">
+    <End Role="Paper" Type="Self.Paper" Multiplicity="0..1" />
+    <End Role="Comments" Type="Self.Comments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Paper">
+        <PropertyRef Name="PaperID" />
+      </Principal>
+      <Dependent Role="Comments">
+        <PropertyRef Name="PapID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tags_Author">
+    <End Role="Author" Type="Self.Author" Multiplicity="0..1" />
+    <End Role="Tags" Type="Self.Tags" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Author">
+        <PropertyRef Name="AuthorID" />
+      </Principal>
+      <Dependent Role="Tags">
+        <PropertyRef Name="AuthID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tags_Paper">
+    <End Role="Paper" Type="Self.Paper" Multiplicity="0..1" />
+    <End Role="Tags" Type="Self.Tags" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Paper">
+        <PropertyRef Name="PaperID" />
+      </Principal>
+      <Dependent Role="Tags">
+        <PropertyRef Name="PapID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DBModelStoreContainer">
+    <EntitySet Name="Author" EntityType="Self.Author" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Comments" EntityType="Self.Comments" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Paper" EntityType="Self.Paper" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tags" EntityType="Self.Tags" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Comments_Author" Association="Self.FK_Comments_Author">
+      <End Role="Author" EntitySet="Author" />
+      <End Role="Comments" EntitySet="Comments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Comments_Paper" Association="Self.FK_Comments_Paper">
+      <End Role="Paper" EntitySet="Paper" />
+      <End Role="Comments" EntitySet="Comments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tags_Author" Association="Self.FK_Tags_Author">
+      <End Role="Author" EntitySet="Author" />
+      <End Role="Tags" EntitySet="Tags" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tags_Paper" Association="Self.FK_Tags_Paper">
+      <End Role="Paper" EntitySet="Paper" />
+      <End Role="Tags" EntitySet="Tags" />
+    </AssociationSet>
+  </EntityContainer>
+>>>>>>> origin/abdelrhmanNabil
 </Schema>
