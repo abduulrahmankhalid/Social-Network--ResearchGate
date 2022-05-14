@@ -37,10 +37,10 @@ namespace ResearchGate.Controllers
         }
 
         // GET: Tags/Create
-        public ActionResult Create()
+      
+        public ActionResult Create(int? id)
         {
             ViewBag.AuthID = new SelectList(db.Authors, "AuthorID", "Email");
-            ViewBag.PapID = new SelectList(db.Papers, "PaperID", "Title");
             return View();
         }
 
@@ -49,13 +49,14 @@ namespace ResearchGate.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "TagID,AuthID,PapID")] Tag tag)
+        public ActionResult Create([Bind(Include = "TagID,AuthID,PapID")] Tag tag,int? id)
         {
+            tag.PapID = id;
             if (ModelState.IsValid)
             {
                 db.Tags.Add(tag);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details","Papers",new { id=id});
             }
 
             ViewBag.AuthID = new SelectList(db.Authors, "AuthorID", "Email", tag.AuthID);
