@@ -81,25 +81,6 @@ namespace ResearchGate.Controllers
             return View(comment);
         }
 
-        public ActionResult MyPaper_ID_Comment(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-
-
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-
-
-            return View(db.Comments.Where(x => x.PapID == id).ToList());
-        }
-
         // GET: Comments/Edit/5
         public ActionResult Edit(int? id)
         {

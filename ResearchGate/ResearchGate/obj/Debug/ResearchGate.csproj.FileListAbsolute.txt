@@ -158,3 +158,7 @@ C:\Users\lenovo\OneDrive\Documents\GitHub\ResearchGate--SW2-Project\ResearchGate
 C:\Users\lenovo\OneDrive\Documents\GitHub\ResearchGate--SW2-Project\ResearchGate\ResearchGate\bin\roslyn\vbc.rsp
 C:\Users\lenovo\OneDrive\Documents\GitHub\ResearchGate--SW2-Project\ResearchGate\ResearchGate\bin\roslyn\VBCSCompiler.exe
 C:\Users\lenovo\OneDrive\Documents\GitHub\ResearchGate--SW2-Project\ResearchGate\ResearchGate\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\ahmed\Documents\GitHub\ResearchGate--SW2-Project\ResearchGate\ResearchGate\bin\Microsoft.AspNet.Identity.Core.dll
+C:\Users\ahmed\Documents\GitHub\ResearchGate--SW2-Project\ResearchGate\ResearchGate\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+C:\Users\ahmed\Documents\GitHub\ResearchGate--SW2-Project\ResearchGate\ResearchGate\bin\Microsoft.AspNet.Identity.Core.xml
+C:\Users\ahmed\Documents\GitHub\ResearchGate--SW2-Project\ResearchGate\ResearchGate\bin\Microsoft.AspNet.Identity.EntityFramework.xml
