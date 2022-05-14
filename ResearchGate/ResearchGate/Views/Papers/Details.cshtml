@@ -24,6 +24,7 @@
     <dd>
         @Html.ActionLink("Contributers", "MyPaper_ID", "Papers", new { id = Model.PaperID }, new { @class = "btn btn-success" })
         @*<a href="~/Authors/Details/@ViewBag.authID">@ViewBag.First</a>*@
+        @Html.ActionLink("Add Contibutor", "Create", "Tags", new { id = Model.PaperID }, new { @class = "btn btn-success" })
     </dd>
 </dl>
 <hr />

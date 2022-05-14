@@ -12,15 +12,13 @@
         background: linear-gradient(120deg,#7FFFD4,#008B8B)
     }
 
-
-
     .center {
         position: absolute;
         top: 50%;
         left: 50%;
         transform: translate(-50%,-50%);
         width: 350px;
-        height:400px;
+        height: 400px;
         background: #FFFAF0;
         border-radius: 10px;
     }
@@ -29,7 +27,6 @@
 
 
     input[type="submit"] {
-    
         width: 100%;
         height: 50px;
         border: 1px solid;
@@ -49,34 +46,37 @@
         border-bottom: 1px solid silver;
     }
 
-        input[type="submit"]:hover {
-            border-color: #2691d9;
-            transition: .5s;
-        }
-
-   
-
+    input[type="submit"]:hover {
+        border-color: #2691d9;
+        transition: .5s;
+    }
 </style>
 
+@{
+    ViewBag.Title = "Create";
+}
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-<div class="center">
 
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div style="text-align:center">
-        <h2>Please Choose Contributed Authors n This Paper</h2>
-    </div>
-    <div style="text-align:center;
+    <div class="center">
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div style="text-align:center">
+                <h2>Please Choose Contributed Authors n This Paper</h2>
+            </div>
+            <div style="text-align:center;
                    padding-left: 40px;
                    padding-top: 50px;">
-        @Html.DropDownList("AuthID", null, htmlAttributes: new { @class = "form-control" })
-        @Html.ValidationMessageFor(model => model.AuthID, "", new { @class = "text-danger" })
-    </div>
-        <div style="text-align:center;
+                @Html.DropDownList("AuthID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.AuthID, "", new { @class = "text-danger" })
+            </div>
+            <div style="text-align:center;
                         padding-top:80px;">
-            <input type="submit" value="Create" />
-        </div>
+                <input type="submit" value="Create" />
+            </div>
+
+        }
     </div>
-    }

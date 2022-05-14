@@ -189,14 +189,14 @@
                                         <p class="m-b-10 f-w-600">Department</p>
                                         <h6 class="text-muted f-w-400">@Html.DisplayFor(model => model.Department)</h6>
 
-                                        <div style="margin-left:17%; margin-top: 80px;">@Html.ActionLink("Add Research", "Create", "Papers", new { id = Model.AuthorID }, new { @class = "btn btn-success btn-lg" })</div>
+                                        <div style="margin-left:12%; margin-top: 80px;">@Html.ActionLink("Add Research", "Create", "Papers", new { id = Model.AuthorID }, new { @class = "btn btn-success btn-lg" })</div>
 
                                     </div>
 
                                 </div>
 
 
-                                <div style="margin-left:58%; margin-top: 20px;">
+                                <div style="margin-left:56%; margin-top: 20px;">
                                     <a href="@Url.Action("MyPaper_Details","Authors", new { id = Model.AuthorID })" class="btn btn-success btn-lg ">
                                         <span class="glyphicon glyphicon-eye-open"></span>
                                         |Show Researchs

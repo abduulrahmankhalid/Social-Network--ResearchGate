@@ -1,19 +1,36 @@
 ﻿@if (Session["username"] == null)
 {
-    
-    
+
+
     <li>@Html.ActionLink("Login", "Login", "Authors")</li>
     <li>@Html.ActionLink("Register", "Create", "Authors")</li>
 }
 
 else
 {
-    <li>@Html.ActionLink("About", "About", "Home")</li>
-    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
     <li>@Html.ActionLink("Profile", "Details", "Authors", new { id = Session["AuthID"] }, null)</li>
 
     @*<li>@Html.ActionLink("My Papers", "Details", "Authors", new { id = Session["AuthID"] }, null)</li>*@
 
     <li>@Html.ActionLink("Logout", "Login", "Authors")</li>
 
+    <li style="margin-left: 40px;display: inline; margin-top: 7px;">
+        <div class="input-group mb-3" style=" display: flex; flex-wrap: nowrap; align-items: center; margin-left: 310px;">
+            <div class="input-group-prepend">
+                <button class="btn btn-outline-secondary dropdown-toggle"
+                        type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                        style="margin-right: 5px; width:118px; text-align:center;">
+                    ▼ Search
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="~/Authors/FilterSearchEmail_get" style="padding-left: 7px;">E-mail</a>
+                    <div role="separator" class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="~/Authors/FilterSearchName_get" style="padding-left: 7px;">Name</a>
+                    <div role="separator" class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="~/Authors/FilterSearchUni_get" style="padding-left: 7px;">University</a>
+
+                </div>
+            </div>
+        </div>
+    </li>
 }

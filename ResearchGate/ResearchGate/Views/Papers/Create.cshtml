@@ -157,31 +157,13 @@
     ViewBag.Title = "Create";
 }
 
-
-
-<body>
     <div class="form-horizontal">
-
-
-
-        <hr />
-
-
-
-
-
-        <div class="center">
-        </div>
         <div class="center">
             <h1>Create Paper</h1>
             @using (Html.BeginForm("Create", "Papers", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
 
-
-
                 @Html.AntiForgeryToken()
-
-
 
                 <div class="txt_field">
                     <input id="Title" name="Title" type="text" required>
@@ -203,16 +185,7 @@
                     </label>
                     <input id="Date" name="Date" type="date" required>
                     <span></span>
-
-
-
-
-
                 </div>
-
-
-
-
 
                 <div class="image_field">
                     <label>
@@ -222,7 +195,7 @@
                     <span></span>
                 </div>
                 <div style="text-align:center">
-                    <input type="submit" value="Create" />
+                    <input type="submit" value="Create"/>
                 </div>
             }
         </div>
@@ -231,5 +204,5 @@
     </div>
 
 
-</body>
+
 
