@@ -1,0 +1,72 @@
+﻿@model ResearchGate.Models.Paper
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Paper</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Abstract)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Abstract)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Image)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Image)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Likes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Likes)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Dislikes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Dislikes)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    <a href="@Url.Action("Create" , "Comments" , new { id = Model.PaperID})" class="btn btn-warning" style="position:fixed;">
+        <span class="glyphicon glyphicon-pencil"></span>
+        Add New Comment
+    </a>
+</p>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.PaperID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

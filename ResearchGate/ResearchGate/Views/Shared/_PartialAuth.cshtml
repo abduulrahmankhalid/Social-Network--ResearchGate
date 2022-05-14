@@ -1,0 +1,19 @@
+﻿@if (Session["username"] == null)
+{
+    
+    
+    <li>@Html.ActionLink("Login", "Login", "Authors")</li>
+    <li>@Html.ActionLink("Register", "Create", "Authors")</li>
+}
+
+else
+{
+    <li>@Html.ActionLink("About", "About", "Home")</li>
+    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+    <li>@Html.ActionLink("Profile", "Details", "Authors", new { id = Session["AuthID"] }, null)</li>
+
+    @*<li>@Html.ActionLink("My Papers", "Details", "Authors", new { id = Session["AuthID"] }, null)</li>*@
+
+    <li>@Html.ActionLink("Logout", "Login", "Authors")</li>
+
+}

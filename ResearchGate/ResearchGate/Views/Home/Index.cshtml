@@ -1,0 +1,31 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>Research Gate</h1>
+    <p class="lead">Discover scientific knowledge and stay connected to the world of science.</p>
+    
+</div>
+
+<div class="row">
+    <div class="col-md-5">
+        <h2>Getting started</h2>
+        <p>
+            Advance your research and join a community of 20 million scientists
+            <h4>Measure your impact</h4>
+            Get in-depth stats on who's been reading your work and keep track of your citations.
+        </p>
+        <p>@Html.ActionLink("Join for free", "Create", "Authors", null, new { @class = "btn btn-success" })</p>
+    </div>
+
+    <div class="col-md-offset-8">
+        <h2>Continue your work</h2>
+        <p>
+            Connect with your scientific community
+            <h4>Share your research</h4>
+            collaborate with your peers,</br>
+            and get the support you need to advance your career.
+        </p>
+        <p>@Html.ActionLink("Login", "Login", "Authors", null, new { @class = "btn btn-success" })</p>
+    </div>

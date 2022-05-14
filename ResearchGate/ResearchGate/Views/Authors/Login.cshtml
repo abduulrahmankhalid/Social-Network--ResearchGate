@@ -1,0 +1,133 @@
+﻿@model ResearchGate.Models.Author
+
+<!DOCTYPE html>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        overflow: hidden;
+    }
+
+
+
+    .center {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        width: 400px;
+        height: 600px;
+        border-radius: 10px;
+    }
+
+
+        .center form {
+            padding: 40px;
+            box-sizing: border-box;
+        }
+
+
+        .center h1 {
+            text-align: center;
+            padding: 0 0 20px 0;
+            border-bottom: 1px solid silver;
+        }
+
+
+    form .txt_field {
+        position: relative;
+        border-bottom: 2px solid #adadad;
+        margin: 30px;
+    }
+
+
+ 
+
+    .txt_field label {
+        position: absolute;
+        top: 50%;
+        left: 5px;
+        color: #adaad;
+        transform: translateY(-50%);
+        font-size: 16px;
+        pointer-events: none;
+        transition: .5s;
+    }
+
+
+    input[type="submit"] {
+        width: 100%;
+        height: 50px;
+        border: 1px solid;
+        background: #2691d9;
+        border-radius: 25px;
+        font-size: 18px;
+        color: #e9f4fb;
+        font-weight: 700;
+        cursor: pointer;
+        outline: none;
+        align-self: self-start;
+    }
+
+        input[type="submit"]:hover {
+            border-color: #2691d9;
+            transition: .5s;
+        }
+
+</style>
+@{
+    ViewBag.Title = "Login";
+}
+
+<h2>Login</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+
+<div class="center">
+    <h3>Author</h3>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form">
+        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+        <br />
+        <div class=" txt_field label ">
+            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    <div class="form">
+        @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+        <br />
+        <div class="txt_field label ">
+            @Html.PasswordFor(model => model.Password, new { @class = "form-control" })
+
+            @*@Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })*@
+
+        </div>
+    </div>
+
+
+
+    <div class="input[type=" submit"]">
+
+        <div class="form .txt_field">
+
+            @if (ViewBag.error != null)
+            {
+                <p class="text-danger">@ViewBag.error</p>
+            }
+
+            <input type="submit" value="Login" class="btn btn-success" />
+
+        </div>
+    </div>
+</div>
+}
