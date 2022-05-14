@@ -7,7 +7,11 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using ResearchGate.Models;
+
 using System.IO;
+
+
+using Microsoft.AspNet.Identity;
 
 
 namespace ResearchGate.Controllers
@@ -23,6 +27,37 @@ namespace ResearchGate.Controllers
         }
 
         // GET: Papers/Details/5
+        public ActionResult PaperPage()
+        {
+            return View();
+        }
+
+        public ActionResult Like(int? id)
+        {
+            Paper paper = db.Papers.ToList().Find(x => x.PaperID == id);
+
+            paper.Likes += 1;
+
+            db.Entry(paper).State = EntityState.Modified;
+
+            db.SaveChanges();
+
+            return RedirectToAction("Details", new { id = paper.PaperID });
+        }
+
+        public ActionResult Dislike(int? id)
+        {
+            Paper paper = db.Papers.ToList().Find(x => x.PaperID == id);
+
+            paper.Dislikes += 1;
+
+            db.Entry(paper).State = EntityState.Modified;
+
+            db.SaveChanges();
+
+            return RedirectToAction("Details", new { id = paper.PaperID });
+        }
+
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -35,6 +70,22 @@ namespace ResearchGate.Controllers
                 return HttpNotFound();
             }
             return View(paper);
+        }
+        public ActionResult MyPaper_ID(int? id)
+        {
+
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            return View(db.Tags.Where(x => x.PapID == id).ToList());
+            
         }
 
         // GET: Papers/Create
@@ -67,6 +118,7 @@ namespace ResearchGate.Controllers
 
             if (ModelState.IsValid)
             {
+                //paper.AuthorID = User.Identity.GetUserId().ToString();
                 db.Papers.Add(paper);
                 db.SaveChanges();
                 return RedirectToAction("Create","Tags",new {id=paper.PaperID });
@@ -142,5 +194,8 @@ namespace ResearchGate.Controllers
             }
             base.Dispose(disposing);
         }
+
+        
+
     }
 }

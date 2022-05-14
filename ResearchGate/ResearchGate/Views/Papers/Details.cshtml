@@ -1,72 +1,86 @@
 ﻿@model ResearchGate.Models.Paper
-
 @{
     ViewBag.Title = "Details";
+    var x = 1;
 }
+<hr />
+<dl class="dl-horizontal">
+    <dt>
+        @Html.DisplayNameFor(model => model.Title)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.Title)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.Date)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.Date)
+    </dd>
+    <dt>
+        <img src="~/Image/profile.png" style="margin-right:7px; width:30px; height:30px;" />
+    </dt>
 
-<h2>Details</h2>
-
+    <dd>
+        @Html.ActionLink("Contributers", "MyPaper_ID", "Papers", new { id = Model.PaperID }, new { @class = "btn btn-success" })
+        @*<a href="~/Authors/Details/@ViewBag.authID">@ViewBag.First</a>*@
+    </dd>
+</dl>
+<hr />
+<dl class="dl-horizontal">
+    <dt>
+        @Html.DisplayNameFor(model => model.Abstract)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.Abstract)
+    </dd>
+</dl>
+<hr />
+@*
+    <dt>
+    @Html.DisplayNameFor(model => model.Image)
+    </dt>*@
+<dl class="dl-horizontal">
+    <dd style="margin-top:10px;">
+        <center>
+            <img src="@Url.Content(Model.Image)" width="1000" height="950" />
+        </center>
+    </dd>
+</dl>
+<hr />
 <div>
-    <h4>Paper</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
+    <center>
+        <dl style="margin-left:200px;">
+            <dt style="display:inline;">
+                <a href="@Url.Action("Like","Papers", new { id = Model.PaperID })" class="btn btn-success">
+                    <span class="glyphicon glyphicon-thumbs-up"></span>
+                    | @Html.DisplayFor(model => model.Likes) | Like
+                </a>
+            </dt>
+            <dt style="display:inline; margin-left:175px;">
+                <a href="@Url.Action("Dislike","Papers", new { id = Model.PaperID })" class="btn btn-success">
+                    <span class="glyphicon glyphicon-thumbs-up"></span>
+                    | @Html.DisplayFor(model => model.Dislikes) | Dislike
+                </a>
+            </dt>
+        </dl>
+    </center>
 
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Date)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Date)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Abstract)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Abstract)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Image)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Image)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Likes)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Likes)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Dislikes)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Dislikes)
-        </dd>
-
-    </dl>
+    <center>
+        <dl style="margin-left:200px;">
+            <dt style="display:inline;">
+                <a href="@Url.Action("MyPaper_ID_Comment" , "Comments" , new { id = Model.PaperID})" class="btn btn-warning">
+                    <span class="glyphicon glyphicon-eye-open"></span>
+                    | Show Comment
+                </a>
+            </dt>
+            <dt style="display:inline; margin-left:175px;">
+                <a href="@Url.Action("Create" , "Comments" , new { id = Model.PaperID})" class="btn btn-warning">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                    | Add New Comment
+                </a>
+            </dt>
+        </dl>
+    </center>
 </div>
-<p>
-    <a href="@Url.Action("Create" , "Comments" , new { id = Model.PaperID})" class="btn btn-warning" style="position:fixed;">
-        <span class="glyphicon glyphicon-pencil"></span>
-        Add New Comment
-    </a>
-</p>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.PaperID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
