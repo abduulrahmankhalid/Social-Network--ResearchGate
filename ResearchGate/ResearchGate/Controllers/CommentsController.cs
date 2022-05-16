@@ -67,6 +67,7 @@ namespace ResearchGate.Controllers
             return View(comment);
         }
 
+
         // GET: Comments/Create
         [CustomAuthenticationFilter]
         public ActionResult Create()

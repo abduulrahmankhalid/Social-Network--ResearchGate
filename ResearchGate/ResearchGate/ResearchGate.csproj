@@ -195,6 +195,10 @@
     <Content Include="Content\PaperImages\paper8.jpg" />
     <Content Include="Content\PaperImages\paper_default_img.jpg" />
     <Content Include="Content\ProfileImages\profile_default_img.png" />
+    <Content Include="Content\Slides\slide1.jpg" />
+    <Content Include="Content\Slides\slide2.jpg" />
+    <Content Include="Content\Slides\slide3.jpg" />
+    <Content Include="Content\Slides\slide4.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -218,6 +222,7 @@
     <Content Include="Models\DB.edmx.diagram">
       <DependentUpon>DB.edmx</DependentUpon>
     </Content>
+    <Content Include="ClassDiagram1.cd" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />

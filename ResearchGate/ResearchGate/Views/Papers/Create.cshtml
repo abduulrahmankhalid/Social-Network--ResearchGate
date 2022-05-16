@@ -4,15 +4,14 @@
 
 <style>
     body {
-        font-family: montserrt;
         margin: 0;
         padding: 0;
         height: 100vh;
         overflow: hidden;
-        background: linear-gradient(120deg,#7FFFD4,#008B8B)
+       
     }
 
-
+    /*background: linear-gradient(120deg,#7FFFD4,#008B8B)*/
 
     .center {
         position: absolute;
@@ -20,7 +19,7 @@
         left: 50%;
         transform: translate(-50%,-50%);
         width: 400px;
-        background: #FFFAF0;
+        
         border-radius: 10px;
     }
 
@@ -157,51 +156,49 @@
     ViewBag.Title = "Create";
 }
 
-    <div class="form-horizontal">
-        <div class="center">
-            <h1>Create Paper</h1>
-            @using (Html.BeginForm("Create", "Papers", FormMethod.Post, new { enctype = "multipart/form-data" }))
-            {
+<div class="center">
+    <h1>Create Paper</h1>
+    @using (Html.BeginForm("Create", "Papers", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
 
-                @Html.AntiForgeryToken()
+        @Html.AntiForgeryToken()
 
-                <div class="txt_field">
-                    <input id="Title" name="Title" type="text" required>
-                    <span></span>
-                    <label>
-                        @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
-                    </label>
-                </div>
-                <div class="txt_field">
-                    <input id="Abstract" name="Abstract" type="text" required>
-                    <span></span>
-                    <label>
-                        @Html.LabelFor(model => model.Abstract, htmlAttributes: new { @class = "control-label col-md-2" })
-                    </label>
-                </div>
-                <div class="image_field">
-                    <label>
-                        @Html.LabelFor(model => model.Date, htmlAttributes: new { @class = "control-label col-md-2" })
-                    </label>
-                    <input id="Date" name="Date" type="date" required>
-                    <span></span>
-                </div>
-
-                <div class="image_field">
-                    <label>
-                        @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-2" })
-                    </label>
-                    <input type="file" id="PapImgFile" name="PapImgFile" class="form-control" />
-                    <span></span>
-                </div>
-                <div style="text-align:center">
-                    <input type="submit" value="Create"/>
-                </div>
-            }
+        <div class="txt_field">
+            <input id="Title" name="Title" type="text" required>
+            
+            <label>
+                @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+            </label>
         </div>
+        <div class="txt_field">
+            <input id="Abstract" name="Abstract" type="text" required>
+            <span></span>
+            <label>
+                @Html.LabelFor(model => model.Abstract, htmlAttributes: new { @class = "control-label col-md-2" })
+            </label>
+        </div>
+        <div class="image_field">
+            <label>
+                @Html.LabelFor(model => model.Date, htmlAttributes: new { @class = "control-label col-md-2" })
+            </label>
+            <input id="Date" name="Date" type="date" required>
+            <span></span>
+        </div>
+        <br />
+        <div class="image_field">
+            <label>
+                @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-2" })
+            </label>
+            <input type="file" id="PapImgFile" name="PapImgFile" class="form-control" />
+            <span></span>
+        </div>
+        <br />
+        <div style="text-align:center">
+            <input type="submit" value="Create" />
+        </div>
+    }
+</div>
 
-
-    </div>
 
 
 

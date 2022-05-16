@@ -187,9 +187,9 @@
                                     <div class="col-sm-6">
                                         <p class="m-b-10 f-w-600">Department</p>
                                         <h6 class="text-muted f-w-400">@Html.DisplayFor(model => model.Department)</h6>
-
-                                        <div style="margin-left:7%; margin-top: 80px;">@Html.ActionLink("[+] Add Research", "Create", "Papers", new { id = Model.AuthorID }, new { @class = "btn btn-success btn-lg" })</div>
-
+                                        @if ((int)Session["AuthID"] == Model.AuthorID) {
+                                        <div style="margin-left:7%; margin-top: 50px;">@Html.ActionLink("[+] Add Research", "Create", "Papers", new { id = Model.AuthorID }, new { @class = "btn btn-success btn-lg" })</div>
+                                        }
                                     </div>
 
                                 </div>

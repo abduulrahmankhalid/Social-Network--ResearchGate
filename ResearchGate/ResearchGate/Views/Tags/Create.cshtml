@@ -4,12 +4,10 @@
 }
 <style>
     body {
-        font-family: montserrt;
         margin: 0;
         padding: 0;
         height: 100vh;
         overflow: hidden;
-        background: linear-gradient(120deg,#7FFFD4,#008B8B)
     }
 
     .center {
@@ -19,7 +17,6 @@
         transform: translate(-50%,-50%);
         width: 350px;
         height: 400px;
-        background: #FFFAF0;
         border-radius: 10px;
     }
 
@@ -76,7 +73,7 @@
                 @Html.ValidationMessageFor(model => model.AuthID, "", new { @class = "text-danger" })
             </div>
             <div style="text-align:center;
-                        padding-top:40px;">
+                        padding-top:50px;">
                 <input type="submit" value="Create" />
             </div>
 

@@ -18,7 +18,7 @@ namespace ResearchGate.Infrastructure
         {
             if (filterContext.Result == null || filterContext.Result is HttpUnauthorizedResult)
             {
-                //Redirecting the user to the Login View of Account Controller  
+                 
                 filterContext.Result = new RedirectToRouteResult(
                 new RouteValueDictionary
                 {
