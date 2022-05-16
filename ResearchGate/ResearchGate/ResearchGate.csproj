@@ -194,6 +194,12 @@
     <Content Include="Content\PaperImages\paper7.jpg" />
     <Content Include="Content\PaperImages\paper8.jpg" />
     <Content Include="Content\PaperImages\paper_default_img.jpg" />
+    <Content Include="Content\ProfileImages\prof1.jpg" />
+    <Content Include="Content\ProfileImages\prof2.jpg" />
+    <Content Include="Content\ProfileImages\prof3.jpg" />
+    <Content Include="Content\ProfileImages\prof4.jpg" />
+    <Content Include="Content\ProfileImages\prof5.jpg" />
+    <Content Include="Content\ProfileImages\prof6.jpg" />
     <Content Include="Content\ProfileImages\profile_default_img.png" />
     <Content Include="Content\Slides\slide1.jpg" />
     <Content Include="Content\Slides\slide2.jpg" />

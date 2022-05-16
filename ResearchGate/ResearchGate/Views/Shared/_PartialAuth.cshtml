@@ -8,6 +8,9 @@
 
 else
 {
+    <li>
+        <img src="@Url.Content((String)Session["ProfImg"])" class="img-circle" alt="User-Profile-Image" style="margin-left: 50px; margin-top:9px; " width="40" height="40">
+    </li>
     <li>@Html.ActionLink("Profile", "Details", "Authors", new { id = Session["AuthID"] }, null)</li>
     <li>@Html.ActionLink("Add New Paper", "Create", "Papers", new { id = Session["AuthID"] }, null)</li>
     <li>@Html.ActionLink("My Papers", "ShowMyPapers", "Authors", new { id = Session["AuthID"] }, null)</li>
@@ -15,12 +18,12 @@ else
 
     <li>@Html.ActionLink("Logout", "Login", "Authors")</li>
 
-    <li style="margin-left: 70px;display: inline; margin-top: 7px;">
+    <li style="margin-left: 70px;display: inline; margin-top: 6px;">
         <div class="input-group mb-3" style=" display: flex; flex-wrap: nowrap; align-items: center; margin-left: 310px;">
             <div class="input-group-prepend">
                 <button class="btn btn-outline-secondary dropdown-toggle"
                         type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                          width:118px; text-align:center;">
+                        width:118px; text-align:center;">
                     ▼ Search
                 </button>
                 <div class="dropdown-menu">
@@ -31,8 +34,8 @@ else
                     <a class="dropdown-item" href="~/Authors/SearchByUniversity" style="padding-left: 7px;">University</a>
 
                 </div>
-                
-                <img src="@Url.Content((String)Session["ProfImg"])" class="img-circle" alt="User-Profile-Image" style="margin-left: 50px;"  width="40" height="40">
+
+
 
             </div>
 
