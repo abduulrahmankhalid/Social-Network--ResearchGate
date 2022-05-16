@@ -11,20 +11,25 @@
     <dd>
         @Html.DisplayFor(model => model.Title)
     </dd>
+    <br/>
     <dt>
         @Html.DisplayNameFor(model => model.Date)
     </dt>
     <dd>
         @Html.DisplayFor(model => model.Date)
     </dd>
+    <br/>
     <dt>
-        <img src="~/Image/profile.png" style="margin-right:7px; width:30px; height:30px;" />
+        <img src="~/Content/ProfileImages/profile_default_img.png" style="margin-right:7pxfound ; width:45px; height:45px;" />
     </dt>
 
     <dd>
-        @Html.ActionLink("Contributers", "MyPaper_ID", "Papers", new { id = Model.PaperID }, new { @class = "btn btn-success" })
-        @*<a href="~/Authors/Details/@ViewBag.authID">@ViewBag.First</a>*@
-        @Html.ActionLink("Add Contibutor", "Create", "Tags", new { id = Model.PaperID }, new { @class = "btn btn-success" })
+        @Html.ActionLink("Contributers", "ShowPaperContributers", "Papers", new { id = Model.PaperID }, new { @class = "btn btn-success" })
+
+        @*@Html.ActionLink("Add Contibutor", "Create", "Tags", new { id = Model.PaperID }, new { @class = "btn btn-success" })*@
+        
+        @Html.Partial("_PartialTag")
+
     </dd>
 </dl>
 <hr />
@@ -41,7 +46,7 @@
     <dt>
     @Html.DisplayNameFor(model => model.Image)
     </dt>*@
-<dl class="dl-horizontal">
+<dl>
     <dd style="margin-top:10px;">
         <center>
             <img src="@Url.Content(Model.Image)" width="1000" height="950" />
@@ -51,7 +56,7 @@
 <hr />
 <div>
     <center>
-        <dl style="margin-left:200px;">
+        <dl >
             <dt style="display:inline;">
                 <a href="@Url.Action("Like","Papers", new { id = Model.PaperID })" class="btn btn-success">
                     <span class="glyphicon glyphicon-thumbs-up"></span>
@@ -69,11 +74,11 @@
 
 
     <center>
-        <dl style="margin-left:200px;">
+        <dl>
             <dt style="display:inline;">
-                <a href="@Url.Action("MyPaper_ID_Comment" , "Comments" , new { id = Model.PaperID})" class="btn btn-warning">
+                <a href="@Url.Action("ShowMyPaperComments" , "Comments" , new { id = Model.PaperID})" class="btn btn-warning">
                     <span class="glyphicon glyphicon-eye-open"></span>
-                    | Show Comment
+                    | Show Comments
                 </a>
             </dt>
             <dt style="display:inline; margin-left:175px;">

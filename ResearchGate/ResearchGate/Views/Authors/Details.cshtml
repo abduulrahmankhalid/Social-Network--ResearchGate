@@ -160,9 +160,8 @@
                                 <h3 class="f-w-600">@Html.DisplayFor(model => model.FirstName)  @Html.DisplayFor(model => model.LastName)</h3>
                                 <p>Author</p> <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
 
-                              
-                                @Html.ActionLink("Edit","Edit", new { id = Model.AuthorID } )
-                               
+                                @Html.Partial("_PartialEdit")
+                                
 
                             </div>
                         </div>
@@ -189,7 +188,7 @@
                                         <p class="m-b-10 f-w-600">Department</p>
                                         <h6 class="text-muted f-w-400">@Html.DisplayFor(model => model.Department)</h6>
 
-                                        <div style="margin-left:12%; margin-top: 80px;">@Html.ActionLink("Add Research", "Create", "Papers", new { id = Model.AuthorID }, new { @class = "btn btn-success btn-lg" })</div>
+                                        <div style="margin-left:7%; margin-top: 80px;">@Html.ActionLink("[+] Add Research", "Create", "Papers", new { id = Model.AuthorID }, new { @class = "btn btn-success btn-lg" })</div>
 
                                     </div>
 
@@ -197,7 +196,7 @@
 
 
                                 <div style="margin-left:56%; margin-top: 20px;">
-                                    <a href="@Url.Action("MyPaper_Details","Authors", new { id = Model.AuthorID })" class="btn btn-success btn-lg ">
+                                    <a href="@Url.Action("ShowMyPapers","Authors", new { id = Model.AuthorID })" class="btn btn-success btn-lg ">
                                         <span class="glyphicon glyphicon-eye-open"></span>
                                         |Show Researchs
                                     </a>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
@@ -143,6 +143,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\CustomAuthenticationFilter.cs" />
     <Compile Include="Models\Author.cs">
       <DependentUpon>DB.tt</DependentUpon>
     </Compile>
@@ -183,27 +184,21 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Logo\logo.png" />
+    <Content Include="Content\PaperImages\paper1.jpg" />
+    <Content Include="Content\PaperImages\paper2.jpg" />
+    <Content Include="Content\PaperImages\paper3.jpg" />
+    <Content Include="Content\PaperImages\paper4.jpg" />
+    <Content Include="Content\PaperImages\paper5.jpg" />
+    <Content Include="Content\PaperImages\paper6.jpg" />
+    <Content Include="Content\PaperImages\paper7.jpg" />
+    <Content Include="Content\PaperImages\paper8.jpg" />
     <Content Include="Content\PaperImages\paper_default_img.jpg" />
-    <Content Include="Content\ProfileImages\profile_default_img.jpg" />
-    <Content Include="Content\imeges\logo.png" />
-    <Content Include="Content\imeges\paper1.jpg" />
-    <Content Include="Content\imeges\paper2.jpg" />
-    <Content Include="Content\imeges\paper3.jpg" />
-    <Content Include="Content\imeges\paper4.jpg" />
-    <Content Include="Content\imeges\prof1.jpg" />
-    <Content Include="Content\imeges\prof2.jpg" />
-    <Content Include="Content\imeges\prof3.jpg" />
-    <Content Include="Content\imeges\prof4.jpg" />
+    <Content Include="Content\ProfileImages\profile_default_img.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Image\1.jpg" />
-    <Content Include="Image\2.jpg" />
-    <Content Include="Image\3.jpg" />
-    <Content Include="Image\4.jpg" />
-    <Content Include="Image\5.jpg" />
-    <Content Include="Image\profile.png" />
     <Content Include="Models\DB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>DB.Context.cs</LastGenOutput>
@@ -270,17 +265,17 @@
     <Content Include="Views\Comments\Index.cshtml" />
     <Content Include="Views\Authors\Login.cshtml" />
     <Content Include="Views\Shared\_PartialAuth.cshtml" />
-    <Content Include="Views\Papers\PaperPage.cshtml" />
-    <Content Include="Views\Papers\MyPaper_ID.cshtml" />
-    <Content Include="Views\Comments\MyPaper_ID_Comment.cshtml" />
-    <Content Include="Views\Authors\MyPaper_Details.cshtml" />
-    <Content Include="Views\Authors\FilterSearchEmail_get.cshtml" />
-    <Content Include="Views\Authors\FilterSearchEmail_post.cshtml" />
-    <Content Include="Views\Authors\FilterSearchName_get.cshtml" />
-    <Content Include="Views\Authors\FilterSearchName_post.cshtml" />
-    <Content Include="Views\Authors\FilterSearchUni_post.cshtml" />
-    <Content Include="Views\Authors\FilterSearchUni_get.cshtml" />
+    <Content Include="Views\Papers\ShowPaperContributers.cshtml" />
+    <Content Include="Views\Comments\ShowMyPaperComments.cshtml" />
+    <Content Include="Views\Authors\ShowMyPapers.cshtml" />
+    <Content Include="Views\Authors\SearchByEmail.cshtml" />
+    <Content Include="Views\Authors\SearchByName.cshtml" />
+    <Content Include="Views\Authors\ReturnSearchedNames.cshtml" />
+    <Content Include="Views\Authors\ReturnUniversityAuthors.cshtml" />
+    <Content Include="Views\Authors\SearchByUniversity.cshtml" />
     <Content Include="Views\Shared\NotFound.cshtml" />
+    <Content Include="Views\Shared\_PartialEdit.cshtml" />
+    <Content Include="Views\Shared\_PartialTag.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

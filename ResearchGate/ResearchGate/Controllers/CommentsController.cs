@@ -6,22 +6,29 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using ResearchGate.Infrastructure;
 using ResearchGate.Models;
+
 
 namespace ResearchGate.Controllers
 {
     public class CommentsController : Controller
     {
+
         private DBEntities db = new DBEntities();
 
+
         // GET: Comments
+        [CustomAuthenticationFilter]
         public ActionResult Index()
         {
             var comments = db.Comments.Include(c => c.Author).Include(c => c.Paper);
             return View(comments.ToList());
         }
 
-        public ActionResult MyPaper_ID_Comment(int? id)
+
+        [CustomAuthenticationFilter]
+        public ActionResult ShowMyPaperComments(int? id)
         {
 
             if (id == null)
@@ -29,44 +36,51 @@ namespace ResearchGate.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            if (id == null)
+            var PaperComments = db.Comments.Where(x => x.PapID == id).ToList();
+
+            if (PaperComments.Count == 0)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return View("NotFound");
             }
 
-            return View(db.Comments.Where(x => x.PapID == id).ToList());
-
+            return View(PaperComments);
         }
 
+
+
         // GET: Comments/Details/5
+        [CustomAuthenticationFilter]
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Comment comment = db.Comments.Find(id);
+
             if (comment == null)
             {
                 return HttpNotFound();
             }
+
             return View(comment);
         }
 
         // GET: Comments/Create
+        [CustomAuthenticationFilter]
         public ActionResult Create()
         {
             return View();
         }
 
         // POST: Comments/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Comment comment , int? id)
         {
             comment.PapID = id;
+
             comment.AuthID = (int)Session["AuthID"];
 
             if (ModelState.IsValid)
@@ -78,29 +92,34 @@ namespace ResearchGate.Controllers
 
             ViewBag.AuthID = new SelectList(db.Authors, "AuthorID", "Email", comment.AuthID);
             ViewBag.PapID = new SelectList(db.Papers, "PaperID", "Title", comment.PapID);
+
             return View(comment);
         }
 
+
         // GET: Comments/Edit/5
+        [CustomAuthenticationFilter]
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Comment comment = db.Comments.Find(id);
+
             if (comment == null)
             {
                 return HttpNotFound();
             }
+
             ViewBag.AuthID = new SelectList(db.Authors, "AuthorID", "Email", comment.AuthID);
             ViewBag.PapID = new SelectList(db.Papers, "PaperID", "Title", comment.PapID);
+
             return View(comment);
         }
 
         // POST: Comments/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "CommID,AuthID,PapID,Commnt")] Comment comment)
@@ -116,14 +135,19 @@ namespace ResearchGate.Controllers
             return View(comment);
         }
 
+
+
         // GET: Comments/Delete/5
+        [CustomAuthenticationFilter]
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Comment comment = db.Comments.Find(id);
+
             if (comment == null)
             {
                 return HttpNotFound();

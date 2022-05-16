@@ -1,0 +1,27 @@
+﻿@model IEnumerable<ResearchGate.Models.Tag>
+
+@{
+    ViewBag.Title = "ShowMyPapers";
+}
+
+<center>
+    <div class="container">
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div>
+                    <div class="thumbnail">
+                        <img src="@Url.Content(@item.Paper.Image)" alt="paper-Research" width="500" height="500">
+                        <div class="caption">
+                            <h3>@item.Paper.Title</h3>
+                            <p>@item.Paper.Date</p>
+                            <div>@Html.ActionLink("Open Paper", "Details", "Papers", new { id = item.Paper.PaperID}, new { @class = "btn btn-success" })</div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+
+    </div>
+</center>

@@ -9,12 +9,12 @@
 else
 {
     <li>@Html.ActionLink("Profile", "Details", "Authors", new { id = Session["AuthID"] }, null)</li>
-
-    @*<li>@Html.ActionLink("My Papers", "Details", "Authors", new { id = Session["AuthID"] }, null)</li>*@
+    <li>@Html.ActionLink("My Papers", "ShowMyPapers", "Authors", new { id = Session["AuthID"] }, null)</li>
+   
 
     <li>@Html.ActionLink("Logout", "Login", "Authors")</li>
 
-    <li style="margin-left: 40px;display: inline; margin-top: 7px;">
+    <li style="margin-left: -60px;display: inline; margin-top: 7px;">
         <div class="input-group mb-3" style=" display: flex; flex-wrap: nowrap; align-items: center; margin-left: 310px;">
             <div class="input-group-prepend">
                 <button class="btn btn-outline-secondary dropdown-toggle"
@@ -23,11 +23,11 @@ else
                     ▼ Search
                 </button>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="~/Authors/FilterSearchEmail_get" style="padding-left: 7px;">E-mail</a>
+                    <a class="dropdown-item" href="~/Authors/SearchByEmail" style="padding-left: 7px;">E-mail</a>
                     <div role="separator" class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="~/Authors/FilterSearchName_get" style="padding-left: 7px;">Name</a>
+                    <a class="dropdown-item" href="~/Authors/SearchByName" style="padding-left: 7px;">Name</a>
                     <div role="separator" class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="~/Authors/FilterSearchUni_get" style="padding-left: 7px;">University</a>
+                    <a class="dropdown-item" href="~/Authors/SearchByUniversity" style="padding-left: 7px;">University</a>
 
                 </div>
             </div>

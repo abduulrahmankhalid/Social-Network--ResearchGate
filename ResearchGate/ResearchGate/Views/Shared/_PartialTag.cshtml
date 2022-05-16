@@ -1,0 +1,15 @@
+﻿@model ResearchGate.Models.Paper
+
+@{ 
+    var ContributedAuthors = Model.Tags.Where(x => x.PapID == Model.PaperID).ToList();
+}
+
+@foreach (var item in ContributedAuthors)
+{
+    if ((int)Session["AuthID"] == item.Author.AuthorID)
+    {
+
+        @Html.ActionLink("Add Contibutor", "Create", "Tags", new { id = Model.PaperID }, new { @class = "btn btn-success" });
+
+    }
+}

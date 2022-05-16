@@ -1,0 +1,7 @@
+﻿@model ResearchGate.Models.Author
+@if ((int)Session["AuthID"] == Model.AuthorID )
+{
+
+    @Html.ActionLink("Edit", "Edit", new { id = Model.AuthorID })
+
+}

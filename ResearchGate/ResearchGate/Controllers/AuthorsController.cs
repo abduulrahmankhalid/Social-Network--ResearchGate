@@ -7,37 +7,41 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Mvc.Filters;
+using ResearchGate.Infrastructure;
 using ResearchGate.Models;
 
 namespace ResearchGate.Controllers
 {
-    public class AuthorsController : Controller
+    public class AuthorsController : Controller 
     {
         private DBEntities db = new DBEntities();
-
+        
         // GET
         [HttpGet]
         public ActionResult Login()
         {
+
             Session["username"] = null;
             Session["AuthID"] = null;
             Session["ProfImg"] = null;
+
             return View();
         }
+
         //Post
         [HttpPost]
         public ActionResult Login([Bind(Include ="Email , Password")] Author author)
         {
+            Author authorData = isAuthorFound(author);
 
-            var record =
-                db.Authors.Where(x => x.Email == author.Email && x.Password == author.Password).ToList().FirstOrDefault();
-
-            if (record != null)
+            if (authorData != null)
             {
-                Session["username"] = record.FirstName;
-                Session["AuthID"] = record.AuthorID;
-                Session["ProfImg"] = record.ProfImage;
-                return RedirectToAction("Details" , new { id = record.AuthorID });
+                Session["username"] = authorData.FirstName;
+                Session["AuthID"] = authorData.AuthorID;
+                Session["ProfImg"] = authorData.ProfImage;
+
+                return RedirectToAction("Details" , new { id = authorData.AuthorID });
             }
             else
             {
@@ -46,20 +50,136 @@ namespace ResearchGate.Controllers
             }
         }
 
+        public Author isAuthorFound([Bind(Include = "Email , Password")] Author author)
+        {
+             author =
+                db.Authors.Where(x => x.Email == author.Email && x.Password == author.Password).ToList().FirstOrDefault();
+
+            return (author);
+        }
+
+
+
         // GET: Authors
+        [CustomAuthenticationFilter]
         public ActionResult Index()
         {
             return View(db.Authors.ToList());
         }
 
+
+
         // GET: Authors/Details/5
+        [CustomAuthenticationFilter]
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Author author = db.Authors.Find(id);
+
+            if (author == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(author);
+        }
+
+
+
+
+        // GET: Authors/Create
+        public ActionResult Create()
+        {
+            //Authentication
+
+            Session["username"] = null;
+            Session["AuthID"] = null;
+            Session["ProfImg"] = null;
+
+            return View();
+        }
+
+        // POST: Authors/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "AuthorID,Email,Password,ConfPass,FirstName,LastName,University,Department,Mobile,ProfImage")] Author author, HttpPostedFileBase ProfImgFile)
+        {
+
+            if (!isEmailValid(author))
+            {
+                ModelState.AddModelError("Email", "Email Already Used");
+            }
+
+            if (ModelState.IsValid)
+            {
+
+                author.ProfImage = GetProfImagePath(ProfImgFile);
+
+                db.Authors.Add(author);
+
+                db.SaveChanges();
+
+                //Authentication
+
+                Session["username"] = author.FirstName;
+                Session["AuthID"] = author.AuthorID;
+                Session["ProfImg"] = author.ProfImage;
+
+
+                return RedirectToAction("Details", new { id = author.AuthorID });
+            }
+
+            return View(author);
+        }
+
+
+        public bool isEmailValid(Author author)
+        {
+            Author searchEmail = db.Authors.AsNoTracking().Where(x => x.Email == author.Email).ToList().FirstOrDefault();
+
+            if (searchEmail != null)
+            {
+                ModelState.AddModelError("Email", "Email Already Used");
+                return false;
+            }
+
+            return true;
+        }
+
+
+        public String GetProfImagePath(HttpPostedFileBase ProfImgFile)
+        {
+            string path = "";
+
+            if (ProfImgFile != null)
+            {
+                path = "~/Content/ProfileImages/" + Path.GetFileName(ProfImgFile.FileName);
+                ProfImgFile.SaveAs(Server.MapPath(path));
+            }
+            else
+            {
+                path = "~/Content/ProfileImages/profile_default_img.png";
+            }
+            return path;
+        }
+
+
+
+        // GET: Authors/Edit/5
+        [CustomAuthenticationFilter]
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            Author author = db.Authors.Find(id);
+
             if (author == null)
             {
                 return HttpNotFound();
@@ -68,26 +188,80 @@ namespace ResearchGate.Controllers
         }
 
 
+        // POST: Authors/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(
+            [Bind(Include = "AuthorID,Email,Password,ConfPass,FirstName,LastName,University,Department,Mobile,ProfImage")] Author author, HttpPostedFileBase EditProfImgFile)
+        {
+
+            var NewEditedAuthor = GetNewEditedAuthor(author);
+
+            var OldEditedAuthor = GetOldEditedAuthor(author);
+
+            if (NewEditedAuthor != null && NewEditedAuthor.Email != OldEditedAuthor.Email)
+            {
+
+                ModelState.AddModelError("Email", "Email Already Used");
+
+            }
+
+            EditPath(EditProfImgFile, author, OldEditedAuthor);
+
+            if (ModelState.IsValid)
+            {
+                db.Entry(author).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Details", new { id = author.AuthorID });
+            }
+            return View(author);
+        }
+
+        public Author GetNewEditedAuthor(Author author)
+        {
+            var NewEditedAuthor = db.Authors.AsNoTracking().Where(x => x.Email == author.Email).ToList().FirstOrDefault();
+
+            return NewEditedAuthor;
+        }
+
+        public Author GetOldEditedAuthor(Author author)
+        {
+            var OldEditedAuthor = db.Authors.AsNoTracking().Where(x => x.AuthorID == author.AuthorID).ToList().FirstOrDefault();
+
+            return OldEditedAuthor;
+        }
+
+        public void EditPath(HttpPostedFileBase EditProfImgFile, Author author, Author OldEditedAuthor)
+        {
+            string path = "";
+
+            if (EditProfImgFile != null)
+            {
+                path = "~/Content/ProfileImages/" + Path.GetFileName(EditProfImgFile.FileName);
+                EditProfImgFile.SaveAs(Server.MapPath(path));
+                author.ProfImage = path;
+            }
+            else
+            {
+                author.ProfImage = OldEditedAuthor.ProfImage;
+            }
+        }
 
 
 
-        //First One============================================
-
+        [ActionName("SearchByEmail")]
         [HttpGet]
-        public ActionResult FilterSearchEmail_get()
+        [CustomAuthenticationFilter]
+        public ActionResult GetAuthorEmail()
         {
             Author author = new Author();
 
-            if (author == null)
-            {
-                return HttpNotFound();
-            }
-
             return View(author);
         }
 
+
         [HttpPost]
-        public ActionResult FilterSearchEmail_get([Bind(Include = "AuthorID,Email")] Author author)
+        public ActionResult SearchByEmail([Bind(Include = "AuthorID,Email")] Author author)
         {
 
             if (author == null)
@@ -107,35 +281,76 @@ namespace ResearchGate.Controllers
             {
                 return RedirectToAction("Details" , new { id = SearchEmailauthor.AuthorID });
             }
+        }
 
 
+
+
+        [ActionName("SearchByName")]
+        [HttpGet]
+        [CustomAuthenticationFilter]
+        public ActionResult GetAuthorName()
+        {
+            Author author = new Author();         
 
             return View(author);
         }
 
- 
 
-
-
-
-
-        //Second One============================================
-
-        [HttpGet]
-        public ActionResult FilterSearchName_get()
+        [HttpPost]
+        public ActionResult SearchByName([Bind(Include = "AuthorID,FirstName")] Author author)
         {
-            Author author = new Author();
-
             if (author == null)
             {
                 return HttpNotFound();
             }
+
+            Author searchedAuthor = db.Authors.Where(x => x.FirstName == author.FirstName).ToList().FirstOrDefault();
+
+            if (searchedAuthor == null)
+            {
+                ModelState.AddModelError(nameof(Author.FirstName), "No result found!");
+                return View("NotFound");
+            }
+
+            else
+            {
+                return RedirectToAction("ReturnSearchedNames", new { id = searchedAuthor.AuthorID });
+            }
+        }
+
+
+        [CustomAuthenticationFilter]
+        public ActionResult ReturnSearchedNames(int? id)
+        {
+            Author author = db.Authors.Find(id);
+
+            var searchedAuthors = db.Authors.Where(x => x.FirstName == author.FirstName).ToList();
+
+            if (searchedAuthors == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(searchedAuthors);
+        }
+
+
+
+
+        [ActionName("SearchByUniversity")]
+        [CustomAuthenticationFilter]
+        [HttpGet]
+        public ActionResult GetAuthorUniversity()
+        {
+            Author author = new Author();
 
             return View(author);
         }
 
         [HttpPost]
-        public ActionResult FilterSearchName_get([Bind(Include = "AuthorID,FirstName")] Author author)
+        [CustomAuthenticationFilter]
+        public ActionResult SearchByUniversity([Bind(Include = "AuthorID,University")] Author author)
         {
 
             if (author == null)
@@ -143,9 +358,9 @@ namespace ResearchGate.Controllers
                 return HttpNotFound();
             }
 
-            Author SearchEmailauthor = db.Authors.Where(x => x.FirstName == author.FirstName).ToList().FirstOrDefault();
+            Author searchedAuthor = db.Authors.Where(x => x.University == author.University).ToList().FirstOrDefault();
 
-            if (SearchEmailauthor == null)
+            if (searchedAuthor == null)
             {
                 ModelState.AddModelError(nameof(Author.Email), "No result found!");
                 return View("NotFound");
@@ -153,211 +368,51 @@ namespace ResearchGate.Controllers
 
             else
             {
-                return RedirectToAction("FilterSearchName_post", new { id = SearchEmailauthor.AuthorID });
+                return RedirectToAction("ReturnUniversityAuthors", new { id = searchedAuthor.AuthorID });
             }
-
-            return View(author);
         }
 
-
-        public ActionResult FilterSearchName_post(int? id)
+        [CustomAuthenticationFilter]
+        public ActionResult ReturnUniversityAuthors(int? id)
         {
             Author author = db.Authors.Find(id);
 
-            var SearchEmailauthor = db.Authors.Where(x => x.FirstName == author.FirstName).ToList();
+            var SearchedAuthors = db.Authors.Where(x => x.University == author.University).ToList();
 
-            if (SearchEmailauthor == null)
+            if (SearchedAuthors == null)
             {
                 return HttpNotFound();
             }
 
-            return View(SearchEmailauthor);
+            return View(SearchedAuthors);
         }
 
 
 
 
-
-        //Third One============================================
-        [HttpGet]
-        public ActionResult FilterSearchUni_get()
-        {
-            Author author = new Author();
-
-            if (author == null)
-            {
-                return HttpNotFound();
-            }
-
-            return View(author);
-        }
-
-        [HttpPost]
-        public ActionResult FilterSearchUni_get([Bind(Include = "AuthorID,University")] Author author)
-        {
-
-            if (author == null)
-            {
-                return HttpNotFound();
-            }
-
-            Author SearchEmailauthor = db.Authors.Where(x => x.University == author.University).ToList().FirstOrDefault();
-
-            if (SearchEmailauthor == null)
-            {
-                ModelState.AddModelError(nameof(Author.Email), "No result found!");
-                return View("NotFound");
-            }
-
-            else
-            {
-                return RedirectToAction("FilterSearchUni_post", new { id = SearchEmailauthor.AuthorID });
-            }
-
-            return View(author);
-        }
-
-
-        public ActionResult FilterSearchUni_post(int? id)
-        {
-            Author author = db.Authors.Find(id);
-
-            var SearchEmailauthor = db.Authors.Where(x => x.University == author.University).ToList();
-
-            if (SearchEmailauthor == null)
-            {
-                return HttpNotFound();
-            }
-
-            return View(SearchEmailauthor);
-        }
-
-
-
-
-        public ActionResult MyPaper_Details(int? id)
+        [CustomAuthenticationFilter]
+        public ActionResult ShowMyPapers(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
   
-            var tag = db.Tags.Where(x => x.AuthID == id).ToList();
-            return View(tag);
+            var MyPapers = db.Tags.Where(x => x.AuthID == id).ToList();
+
+            if( MyPapers.Count == 0)
+            {
+                return View("NotFound");
+            }
+
+            return View(MyPapers);
         }
 
 
-        // GET: Authors/Create
-        public ActionResult Create()
-        {
-            Session["username"] = null;
-            Session["AuthID"] = null;
-            Session["ProfImg"] = null;
 
-            return View();
-        }
-
-        // POST: Authors/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "AuthorID,Email,Password,ConfPass,FirstName,LastName,University,Department,Mobile,ProfImage")] Author author , HttpPostedFileBase ProfImgFile)
-        {
-
-            Author search = db.Authors.Where( x=> x.Email == author.Email ).ToList().FirstOrDefault();
-
-            if ( search !=null)
-            {
-
-                ModelState.AddModelError("Email", "Email Already Used");
-
-            }
-
-            if (ModelState.IsValid)
-            {
-                string path = "";
-                if (ProfImgFile !=null)
-                {
-                    path = "~/Content/ProfileImages/" + Path.GetFileName(ProfImgFile.FileName) ;
-                    ProfImgFile.SaveAs(Server.MapPath(path));
-                }
-                else
-                {
-                    path = "~/Content/ProfileImages/profile_default_img.jpg";
-                }
-                author.ProfImage = path;
-                db.Authors.Add(author);
-                db.SaveChanges();
-
-                //Authentication
-                Session["username"] = author.FirstName;
-                Session["AuthID"] = author.AuthorID;
-                Session["ProfImg"] = author.ProfImage;
-
-
-                return RedirectToAction("Details", new { id = author.AuthorID });
-            }
-
-            return View(author);
-        }
-
-        // GET: Authors/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Author author = db.Authors.Find(id);
-            if (author == null)
-            {
-                return HttpNotFound();
-            }
-            return View(author);
-        }
-
-        // POST: Authors/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(
-            [Bind(Include = "AuthorID,Email,Password,ConfPass,FirstName,LastName,University,Department,Mobile,ProfImage")] Author author , HttpPostedFileBase EditProfImgFile)
-        {
-
-            var search = db.Authors.AsNoTracking().Where(x => x.Email == author.Email).ToList().FirstOrDefault();
-   
-            var before = db.Authors.AsNoTracking().Where( x=> x.AuthorID == author.AuthorID).ToList().FirstOrDefault();
-
-            if (search != null && search.Email != before.Email )
-            {
-
-                ModelState.AddModelError("Email", "Email Already Used");
-
-            }
-
-            string path = "";
-            if (EditProfImgFile != null)
-            {
-                path = "~/Content/ProfileImages/" + Path.GetFileName(EditProfImgFile.FileName);
-                EditProfImgFile.SaveAs(Server.MapPath(path));
-                author.ProfImage = path;
-            }
-            else
-            {
-                author.ProfImage = before.ProfImage;
-            }
-
-            if (ModelState.IsValid)
-            {
-                db.Entry(author).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Details", new { id = author.AuthorID });
-            }
-            return View(author);
-        }
 
         // GET: Authors/Delete/5
+        [CustomAuthenticationFilter]
         public ActionResult Delete(int? id)
         {
             if (id == null)

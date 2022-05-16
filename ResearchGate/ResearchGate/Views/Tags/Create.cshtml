@@ -65,16 +65,18 @@
 
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div style="text-align:center">
-                <h2>Please Choose Contributed Authors n This Paper</h2>
+                <h2>Please Choose</h2>
+                <h2>Contributed Authors</h2>
+                <h2>On This Paper</h2>
             </div>
             <div style="text-align:center;
                    padding-left: 40px;
-                   padding-top: 50px;">
+                   padding-top: 40px;">
                 @Html.DropDownList("AuthID", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.AuthID, "", new { @class = "text-danger" })
             </div>
             <div style="text-align:center;
-                        padding-top:80px;">
+                        padding-top:40px;">
                 <input type="submit" value="Create" />
             </div>
 

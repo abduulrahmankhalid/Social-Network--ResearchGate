@@ -8,9 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using ResearchGate.Models;
 using System.IO;
-
-
-
+using ResearchGate.Infrastructure;
 
 namespace ResearchGate.Controllers
 {
@@ -19,57 +17,93 @@ namespace ResearchGate.Controllers
         private DBEntities db = new DBEntities();
 
         // GET: Papers
+        [CustomAuthenticationFilter]
         public ActionResult Index()
         {
             return View(db.Papers.ToList());
         }
 
-        // GET: Papers/Details/5
-        public ActionResult PaperPage()
+
+
+        public Paper GetCurrentPaper(int? id)
         {
-            return View();
+            Paper CurrentPaper = db.Papers.ToList().Find(x => x.PaperID == id);
+
+            return CurrentPaper;
         }
 
+        [CustomAuthenticationFilter]
         public ActionResult Like(int? id)
         {
-            Paper paper = db.Papers.ToList().Find(x => x.PaperID == id);
+            Paper CurrentPaper = GetCurrentPaper(id);
 
-            paper.Likes += 1;
+            IncreaseLikes(CurrentPaper);            
 
-            db.Entry(paper).State = EntityState.Modified;
+            db.Entry(CurrentPaper).State = EntityState.Modified;
 
             db.SaveChanges();
 
-            return RedirectToAction("Details", new { id = paper.PaperID });
+            return RedirectToAction("Details", new { id = CurrentPaper.PaperID });
         }
 
+        public Paper IncreaseLikes(Paper CurrentPaper)
+        {           
+
+            CurrentPaper.Likes += 1;
+
+            return CurrentPaper;
+        }
+
+
+
+
+        [CustomAuthenticationFilter]
         public ActionResult Dislike(int? id)
         {
-            Paper paper = db.Papers.ToList().Find(x => x.PaperID == id);
+            Paper CurrentPaper = GetCurrentPaper(id);
 
-            paper.Dislikes += 1;
+            IncreaseDisLikes(CurrentPaper);
 
-            db.Entry(paper).State = EntityState.Modified;
+            db.Entry(CurrentPaper).State = EntityState.Modified;
 
             db.SaveChanges();
 
-            return RedirectToAction("Details", new { id = paper.PaperID });
+            return RedirectToAction("Details", new { id = CurrentPaper.PaperID });
         }
 
+        public Paper IncreaseDisLikes(Paper CurrentPaper)
+        {
+
+            CurrentPaper.Dislikes += 1;
+
+            return CurrentPaper;
+        }
+
+
+
+
+        [CustomAuthenticationFilter]
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Paper paper = db.Papers.Find(id);
+
             if (paper == null)
             {
                 return HttpNotFound();
             }
             return View(paper);
         }
-        public ActionResult MyPaper_ID(int? id)
+
+
+
+
+        [CustomAuthenticationFilter]
+        public ActionResult ShowPaperContributers(int? id)
         {
 
             if (id == null)
@@ -77,16 +111,21 @@ namespace ResearchGate.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            if (id == null)
+            var ContributedAuthors = db.Tags.Where(x => x.PapID == id).ToList();
+
+            if(ContributedAuthors.Count == 0)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return View("NotFound");
             }
 
-            return View(db.Tags.Where(x => x.PapID == id).ToList());
-            
+            return View(ContributedAuthors);           
         }
 
+
+
+
         // GET: Papers/Create
+        [CustomAuthenticationFilter]
         public ActionResult Create()
         {
             return View();
@@ -94,13 +133,27 @@ namespace ResearchGate.Controllers
         }
 
         // POST: Papers/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "PaperID,Title,Date,Abstract,Image,Likes,Dislikes")] Paper paper, HttpPostedFileBase PapImgFile)
         {
+            paper.Image = GetPaperImagePath(PapImgFile);
+            paper.Likes = 0;
+            paper.Dislikes = 0;
+            if (ModelState.IsValid)
+            {
+                db.Papers.Add(paper);
+                db.SaveChanges();
+                return RedirectToAction("Create","Tags",new {id=paper.PaperID });
+            }
+
+            return View(paper);
+        }
+
+        public String GetPaperImagePath(HttpPostedFileBase PapImgFile)
+        {
             string path = "";
+
             if (PapImgFile != null)
             {
                 path = "~/Content/PaperImages/" + Path.GetFileName(PapImgFile.FileName);
@@ -110,24 +163,14 @@ namespace ResearchGate.Controllers
             {
                 path = "~/Content/PaperImages/paper_default_img.jpg";
             }
-            paper.Image = path;
-
-
-
-            if (ModelState.IsValid)
-            {
-                //paper.AuthorID = User.Identity.GetUserId().ToString();
-                db.Papers.Add(paper);
-                db.SaveChanges();
-                return RedirectToAction("Create","Tags",new {id=paper.PaperID });
-            }
-
-
-
-            return View(paper);
+            return path;
         }
 
-        // GET: Papers/Edit/5
+
+
+
+        // GET: Papers/Edit
+        [CustomAuthenticationFilter]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -142,9 +185,8 @@ namespace ResearchGate.Controllers
             return View(paper);
         }
 
-        // POST: Papers/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+
+        // POST: Papers/Edit
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "PaperID,Title,Date,Abstract,Image,Likes,Dislikes")] Paper paper)
@@ -158,7 +200,10 @@ namespace ResearchGate.Controllers
             return View(paper);
         }
 
-        // GET: Papers/Delete/5
+
+
+        // GET: Papers/Delete
+        [CustomAuthenticationFilter]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -173,7 +218,7 @@ namespace ResearchGate.Controllers
             return View(paper);
         }
 
-        // POST: Papers/Delete/5
+        // POST: Papers/Delete
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -191,9 +236,7 @@ namespace ResearchGate.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
-        }
-
-        
+        }        
 
     }
 }
