@@ -1,28 +1,28 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="ResearchGate.BundleConfig">
-    <Position X="13" Y="2.25" Width="1.5" />
+    <Position X="16.25" Y="2.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
       <FileName>App_Start\BundleConfig.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ResearchGate.FilterConfig">
-    <Position X="14.75" Y="2.25" Width="1.5" />
+    <Position X="18.25" Y="2.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
       <FileName>App_Start\FilterConfig.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ResearchGate.RouteConfig">
-    <Position X="14.75" Y="0.5" Width="1.5" />
+    <Position X="18.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
       <FileName>App_Start\RouteConfig.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ResearchGate.MvcApplication">
-    <Position X="13" Y="0.5" Width="1.5" />
+    <Position X="16.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
       <FileName>Global.asax.cs</FileName>
@@ -31,19 +31,19 @@
   <Class Name="ResearchGate.Controllers.AuthorsController">
     <Position X="0.5" Y="0.5" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAIAAAGAxBACgAABABABCAAFAAEgCAGEQAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAGARBACgAABAAAACAAFAAEACACEQAAAAAEA=</HashCode>
       <FileName>Controllers\AuthorsController.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ResearchGate.Controllers.CommentsController">
-    <Position X="7.25" Y="0.5" Width="2" />
+    <Position X="10.25" Y="0.5" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAACARAACAAAAAAAAAAAEIAEACAAEAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAACARAACAAEAAAAAAAAEIAEACAAEAQAAAAAA=</HashCode>
       <FileName>Controllers\CommentsController.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ResearchGate.Controllers.HomeController">
-    <Position X="9.5" Y="0.5" Width="1.5" />
+    <Position X="12.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAEACAAAAAAAAAAAAAAAAAEAAAAAAAA=</HashCode>
       <FileName>Controllers\HomeController.cs</FileName>
@@ -52,19 +52,19 @@
   <Class Name="ResearchGate.Controllers.PapersController">
     <Position X="3" Y="0.5" Width="2" />
     <TypeIdentifier>
-      <HashCode>AgIAAAAAACARAACgAAABAAAAAAEIAEACAAEgAAABAAA=</HashCode>
+      <HashCode>AgIAAAAAACARBACgAAABAAAQAAEIAFACAAEgAAABAAA=</HashCode>
       <FileName>Controllers\PapersController.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ResearchGate.Controllers.TagsController">
-    <Position X="5.25" Y="0.5" Width="1.75" />
+    <Position X="8" Y="0.5" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAACARAACAAAAAAAAAAAEAAEACAAEAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAABACARAACAAAAAAAAAAAEAAEACAAEAAAAAAAA=</HashCode>
       <FileName>Controllers\TagsController.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ResearchGate.Infrastructure.CustomAuthenticationFilter" BaseTypeListCollapsed="true">
-    <Position X="14" Y="4" Width="2.25" />
+    <Position X="17" Y="4" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAQAAAAAAAA=</HashCode>
       <FileName>Infrastructure\CustomAuthenticationFilter.cs</FileName>
@@ -118,6 +118,13 @@
     <TypeIdentifier>
       <HashCode>AAAAABAAAEAAAAAAgAAAAAAAgAAAAQAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\Tag.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ResearchGate.Controllers.FiltersController">
+    <Position X="5.5" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAwAACAAAAABABAAABAAAgAAEAAAAAAAAA=</HashCode>
+      <FileName>Controllers\FiltersController.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

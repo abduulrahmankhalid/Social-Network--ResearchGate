@@ -16,6 +16,16 @@ namespace ResearchGate.Controllers
     {
         private DBEntities db = new DBEntities();
 
+
+        public Paper FindPaper(int? id)
+        {
+
+            Paper CurrentPaper = db.Papers.Find(id);
+
+            return CurrentPaper;
+        }
+
+
         // GET: Papers
         [CustomAuthenticationFilter]
         public ActionResult Index()
@@ -31,6 +41,7 @@ namespace ResearchGate.Controllers
 
             return CurrentPaper;
         }
+
 
         [CustomAuthenticationFilter]
         public ActionResult Like(int? id)
@@ -90,7 +101,7 @@ namespace ResearchGate.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Paper paper = db.Papers.Find(id);
+            Paper paper = FindPaper(id);
 
             if (paper == null)
             {
@@ -98,7 +109,6 @@ namespace ResearchGate.Controllers
             }
             return View(paper);
         }
-
 
 
 
@@ -111,7 +121,7 @@ namespace ResearchGate.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var ContributedAuthors = db.Tags.Where(x => x.PapID == id).ToList();
+            var ContributedAuthors = GetContributers(id);
 
             if(ContributedAuthors.Count == 0)
             {
@@ -121,6 +131,13 @@ namespace ResearchGate.Controllers
             return View(ContributedAuthors);           
         }
 
+        public List<Tag> GetContributers(int? id)
+        {
+
+            var MyContributers = db.Tags.Where(x => x.PapID == id).ToList();
+
+            return MyContributers;
+        }
 
 
 
@@ -138,8 +155,9 @@ namespace ResearchGate.Controllers
         public ActionResult Create([Bind(Include = "PaperID,Title,Date,Abstract,Image,Likes,Dislikes")] Paper paper, HttpPostedFileBase PapImgFile)
         {
             paper.Image = GetPaperImagePath(PapImgFile);
-            paper.Likes = 0;
-            paper.Dislikes = 0;
+
+            SetLikesDislikes(paper);
+
             if (ModelState.IsValid)
             {
                 db.Papers.Add(paper);
@@ -148,6 +166,15 @@ namespace ResearchGate.Controllers
             }
 
             return View(paper);
+        }
+
+        public Paper SetLikesDislikes(Paper CurrentPaper)
+        {
+
+            CurrentPaper.Likes = 0;
+            CurrentPaper.Dislikes = 0;
+
+            return CurrentPaper;
         }
 
         public String GetPaperImagePath(HttpPostedFileBase PapImgFile)
@@ -177,7 +204,9 @@ namespace ResearchGate.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Paper paper = db.Papers.Find(id);
+
+            Paper paper = FindPaper(id);
+
             if (paper == null)
             {
                 return HttpNotFound();
@@ -210,7 +239,9 @@ namespace ResearchGate.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Paper paper = db.Papers.Find(id);
+
+            Paper paper = FindPaper(id);
+
             if (paper == null)
             {
                 return HttpNotFound();
@@ -223,9 +254,12 @@ namespace ResearchGate.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Paper paper = db.Papers.Find(id);
+            Paper paper = FindPaper(id);
+
             db.Papers.Remove(paper);
+
             db.SaveChanges();
+
             return RedirectToAction("Index");
         }
 

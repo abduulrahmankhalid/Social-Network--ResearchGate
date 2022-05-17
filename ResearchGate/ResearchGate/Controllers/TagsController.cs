@@ -9,11 +9,21 @@ using System.Web.Mvc;
 using ResearchGate.Infrastructure;
 using ResearchGate.Models;
 
+
 namespace ResearchGate.Controllers
 {
     public class TagsController : Controller
     {
         private DBEntities db = new DBEntities();
+
+
+        public Tag FindTag(int? id)
+        {
+
+            Tag CurrentTag = db.Tags.Find(id);
+
+            return CurrentTag;
+        }
 
 
         // GET: Tags
@@ -36,12 +46,13 @@ namespace ResearchGate.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Tag tag = db.Tags.Find(id);
+            Tag tag = FindTag(id);
 
             if (tag == null)
             {
                 return HttpNotFound();
             }
+
             return View(tag);
         }
 
@@ -54,9 +65,10 @@ namespace ResearchGate.Controllers
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            }            
 
             ViewBag.AuthID = new SelectList(db.Authors, "AuthorID", "Email");
+
             return View();
         }
 
@@ -80,6 +92,7 @@ namespace ResearchGate.Controllers
                 return RedirectToAction("Details","Papers",new { id});
             }
 
+            
             ViewBag.AuthID = new SelectList(db.Authors, "AuthorID", "Email", tag.AuthID);
             ViewBag.PapID = new SelectList(db.Papers, "PaperID", "Title", tag.PapID);
 
@@ -96,13 +109,19 @@ namespace ResearchGate.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Tag tag = db.Tags.Find(id);
+
+            Tag tag = FindTag(id);
+
             if (tag == null)
             {
                 return HttpNotFound();
             }
+
+
+            //////////
             ViewBag.AuthID = new SelectList(db.Authors, "AuthorID", "Email", tag.AuthID);
             ViewBag.PapID = new SelectList(db.Papers, "PaperID", "Title", tag.PapID);
+
             return View(tag);
         }
 
@@ -117,8 +136,11 @@ namespace ResearchGate.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+
+
             ViewBag.AuthID = new SelectList(db.Authors, "AuthorID", "Email", tag.AuthID);
             ViewBag.PapID = new SelectList(db.Papers, "PaperID", "Title", tag.PapID);
+
             return View(tag);
         }
 
@@ -132,7 +154,9 @@ namespace ResearchGate.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Tag tag = db.Tags.Find(id);
+
+            Tag tag = FindTag(id);
+
             if (tag == null)
             {
                 return HttpNotFound();
@@ -145,9 +169,12 @@ namespace ResearchGate.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Tag tag = db.Tags.Find(id);
+            Tag tag = FindTag(id);
+
             db.Tags.Remove(tag);
+
             db.SaveChanges();
+
             return RedirectToAction("Index");
         }
 
@@ -159,5 +186,6 @@ namespace ResearchGate.Controllers
             }
             base.Dispose(disposing);
         }
+
     }
 }

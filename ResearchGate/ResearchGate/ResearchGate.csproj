@@ -137,6 +137,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AuthorsController.cs" />
     <Compile Include="Controllers\CommentsController.cs" />
+    <Compile Include="Controllers\FiltersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PapersController.cs" />
     <Compile Include="Controllers\TagsController.cs" />
@@ -287,6 +288,11 @@
     <Content Include="Views\Shared\NotFound.cshtml" />
     <Content Include="Views\Shared\_PartialEdit.cshtml" />
     <Content Include="Views\Shared\_PartialTag.cshtml" />
+    <Content Include="Views\Filters\SearchByEmail.cshtml" />
+    <Content Include="Views\Filters\SearchByName.cshtml" />
+    <Content Include="Views\Filters\ReturnSearchedNames.cshtml" />
+    <Content Include="Views\Filters\SearchByUniversity.cshtml" />
+    <Content Include="Views\Filters\ReturnUniversityAuthors.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

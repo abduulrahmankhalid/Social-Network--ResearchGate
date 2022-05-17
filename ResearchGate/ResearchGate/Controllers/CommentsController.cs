@@ -18,11 +18,21 @@ namespace ResearchGate.Controllers
         private DBEntities db = new DBEntities();
 
 
+        public Comment FindComment(int? id)
+        {
+
+            Comment CurrentComment = db.Comments.Find(id);
+
+            return CurrentComment;
+        }
+
+
         // GET: Comments
         [CustomAuthenticationFilter]
         public ActionResult Index()
         {
             var comments = db.Comments.Include(c => c.Author).Include(c => c.Paper);
+
             return View(comments.ToList());
         }
 
@@ -35,8 +45,8 @@ namespace ResearchGate.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-
-            var PaperComments = db.Comments.Where(x => x.PapID == id).ToList();
+            
+            var PaperComments = GetMyPaperComments(id);
 
             if (PaperComments.Count == 0)
             {
@@ -46,6 +56,13 @@ namespace ResearchGate.Controllers
             return View(PaperComments);
         }
 
+        public List<Comment> GetMyPaperComments(int? id)
+        {
+
+            var MyPaperComments = db.Comments.Where(x => x.PapID == id).ToList();
+
+            return MyPaperComments;
+        }
 
 
         // GET: Comments/Details/5
@@ -57,7 +74,7 @@ namespace ResearchGate.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Comment comment = db.Comments.Find(id);
+            Comment comment = FindComment(id);
 
             if (comment == null)
             {
@@ -107,7 +124,7 @@ namespace ResearchGate.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Comment comment = db.Comments.Find(id);
+            Comment comment = FindComment(id);
 
             if (comment == null)
             {
@@ -131,6 +148,7 @@ namespace ResearchGate.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+
             ViewBag.AuthID = new SelectList(db.Authors, "AuthorID", "Email", comment.AuthID);
             ViewBag.PapID = new SelectList(db.Papers, "PaperID", "Title", comment.PapID);
             return View(comment);
@@ -147,7 +165,7 @@ namespace ResearchGate.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Comment comment = db.Comments.Find(id);
+            Comment comment = FindComment(id);
 
             if (comment == null)
             {
@@ -156,14 +174,18 @@ namespace ResearchGate.Controllers
             return View(comment);
         }
 
+
         // POST: Comments/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Comment comment = db.Comments.Find(id);
+            Comment comment = FindComment(id);
+
             db.Comments.Remove(comment);
+
             db.SaveChanges();
+
             return RedirectToAction("Index");
         }
 
